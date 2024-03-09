@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const clientId = "780f802a101a4469932f0ce682c4cc73";
-const clientSecret = "1c32641443a745c69980f4fd319c7632";
+const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
 
 export const getAccessToken = async () => {
   try {
