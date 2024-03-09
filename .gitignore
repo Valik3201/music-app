@@ -1,0 +1,37 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore dist directory (generated build files)
+dist/
+
+# Ignore .cache directory (Vite cache)
+.cache/
+
+# Ignore .DS_Store files on macOS
+.DS_Store
+
+# Ignore .vscode directory (Visual Studio Code settings)
+.vscode/
+
+# Ignore .idea directory (IntelliJ IDEA settings)
+.idea/
+
+# Ignore .env files (environment configuration files)
+.env*
+
+# Ignore any local development or editor-specific configuration files
+*.log
+*.log.*
+*.local
+*.swp
+*.swo
+*.log
+*.bak
+*.cache
+*.DS_Store
+*.tmp
+*.vscode
+*.idea
+*.suo
+*.ntvs*
+*.njsproj.user
