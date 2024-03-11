@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 // Constants for Spotify API
 const clientId = "780f802a101a4469932f0ce682c4cc73";
-const redirectUrl = "http://localhost:5173/callback";
+const redirectUrl = "https://music-app-ts.netlify.app";
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
