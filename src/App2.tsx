@@ -24,12 +24,12 @@ const App: React.FC = () => {
   const [refreshToken, setRefreshToken] = useState<string | null>(
     localStorage.getItem("refresh_token") || null
   );
-  const [expiresIn, setExpiresIn] = useState<number | null>(
+  const [_expiresIn, setExpiresIn] = useState<number | null>(
     localStorage.getItem("expires_in")
       ? parseInt(localStorage.getItem("expires_in")!)
       : null
   );
-  const [expires, setExpires] = useState<Date | null>(
+  const [_expires, setExpires] = useState<Date | null>(
     localStorage.getItem("expires")
       ? new Date(localStorage.getItem("expires")!)
       : null

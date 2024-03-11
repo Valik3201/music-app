@@ -10,7 +10,7 @@ import SpotifyWebApi from "spotify-web-api-js";
 const spotify = new SpotifyWebApi();
 
 const App: React.FC = () => {
-  const [newReleases, setNewReleases] = useState<any[]>([]);
+  const [_newReleases, setNewReleases] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any>({
     artists: [],
