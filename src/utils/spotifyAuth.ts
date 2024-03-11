@@ -26,3 +26,24 @@ export const getAccessToken = async () => {
     return null;
   }
 };
+
+export const authEndpoint = "https://accounts.spotify.com/authorize";
+
+const redirectURI = "http://localhost:5173";
+
+const scopes = ["user-library-modify", "user-library-read"];
+
+export const loginURL = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectURI}&scope=${scopes.join(
+  "%20"
+)}&response_type=token&show _dialog=true`;
+
+export const getTokenFromUrl = (): Record<string, string> => {
+  return window.location.hash
+    .substring(1)
+    .split("&")
+    .reduce((initial: Record<string, string>, item: string) => {
+      let parts = item.split("=");
+      initial[parts[0]] = decodeURIComponent(parts[1]);
+      return initial;
+    }, {});
+};
