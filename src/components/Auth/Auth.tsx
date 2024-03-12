@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
-import { useToken } from "../hooks/useToken";
-import { getToken, getUserData } from "../api/spotify";
-import { redirectUri } from "../constants/constants";
-import { redirectToSpotifyAuthorize } from "../utils/spotifyAuth";
-
-interface AuthProps {
-  children?: React.ReactNode;
-}
+import { useToken } from "../../hooks/useToken";
+import { getToken, getUserData } from "../../api/spotify";
+import { redirectUri } from "../../constants/constants";
+import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
+import { AuthProps, User } from "./types";
 
 const Auth: React.FC<AuthProps> = ({ children }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { accessToken, saveToken, refreshAccessToken } = useToken();
 
