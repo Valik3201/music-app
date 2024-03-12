@@ -1,49 +1,57 @@
-import axios from "axios";
+import {
+  clientId,
+  redirectUri,
+  authorizationEndpoint,
+  scope,
+} from "../constants/constants";
 
-const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+// Function to redirect to Spotify authorization page
+export const redirectToSpotifyAuthorize = async () => {
+  // Generate code verifier and challenge
+  const codeVerifier = generateCodeVerifier();
+  const codeChallenge = await generateCodeChallenge(codeVerifier);
+  localStorage.setItem("code_verifier", codeVerifier);
 
-export const getAccessToken = async () => {
-  try {
-    const params = new URLSearchParams();
-    params.append("grant_type", "client_credentials");
-    params.append("client_id", clientId);
-    params.append("client_secret", clientSecret);
+  // Construct authorization URL
+  const authUrl = new URL(authorizationEndpoint);
+  const params = {
+    response_type: "code",
+    client_id: clientId,
+    scope: scope,
+    code_challenge_method: "S256",
+    code_challenge: codeChallenge,
+    redirect_uri: redirectUri,
+  };
 
-    const response = await axios.post(
-      "https://accounts.spotify.com/api/token",
-      params,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-
-    return response.data.access_token;
-  } catch (error) {
-    console.error("Error getting access token:", error);
-    return null;
-  }
+  authUrl.search = new URLSearchParams(params).toString();
+  // Redirect to Spotify authorization page
+  window.location.href = authUrl.toString();
 };
 
-export const authEndpoint = "https://accounts.spotify.com/authorize";
+// Function to generate code verifier
+export const generateCodeVerifier = () => {
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const randomValues = crypto.getRandomValues(new Uint8Array(64));
+  return Array.from(randomValues)
+    .map((value) => possible[value % possible.length])
+    .join("");
+};
 
-const redirectURI = "http://localhost:5173";
+// Function to generate code challenge
+export const generateCodeChallenge = async (codeVerifier: string) => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(codeVerifier);
+  const hashed = await crypto.subtle.digest("SHA-256", data);
+  return base64urlencode(hashed);
+};
 
-const scopes = ["user-library-modify", "user-library-read"];
-
-export const loginURL = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectURI}&scope=${scopes.join(
-  "%20"
-)}&response_type=token&show _dialog=true`;
-
-export const getTokenFromUrl = (): Record<string, string> => {
-  return window.location.hash
-    .substring(1)
-    .split("&")
-    .reduce((initial: Record<string, string>, item: string) => {
-      let parts = item.split("=");
-      initial[parts[0]] = decodeURIComponent(parts[1]);
-      return initial;
-    }, {});
+// Function to encode array buffer to base64 URL
+const base64urlencode = (arrayBuffer: ArrayBuffer) => {
+  const bytes = new Uint8Array(arrayBuffer);
+  let str = "";
+  bytes.forEach((byte) => {
+    str += String.fromCharCode(byte);
+  });
+  return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 };

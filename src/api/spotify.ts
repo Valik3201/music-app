@@ -1,46 +1,70 @@
 import axios from "axios";
+import { clientId, redirectUri, tokenEndpoint } from "../constants/constants";
 
-axios.defaults.baseURL = "https://api.spotify.com/v1";
+export const getToken = async (code: string | null) => {
+  if (code) {
+    const codeVerifier = localStorage.getItem("code_verifier");
 
-export const fetchNewReleases = async (token: string) => {
-  try {
-    const response = await axios.get("/browse/new-releases", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const response = await axios.post(
+        tokenEndpoint,
+        new URLSearchParams({
+          client_id: clientId,
+          grant_type: "authorization_code",
+          code: code,
+          redirect_uri: redirectUri,
+          code_verifier: codeVerifier!,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
 
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching new releases:", error);
-    return null;
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching token:", error);
+      throw error;
+    }
   }
 };
 
-export const searchItems = async (
-  token: string,
-  query: string,
-  types: string[],
-  market: string = "US",
-  limit: number = 20
-) => {
+export const getRefreshToken = async (refreshToken: string | null) => {
   try {
-    const response = await axios.get("/search", {
+    const response = await axios.post(
+      tokenEndpoint,
+      new URLSearchParams({
+        client_id: clientId,
+        grant_type: "refresh_token",
+        refresh_token: refreshToken!,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    throw error;
+  }
+};
+
+export const getUserData = async (accessToken: string) => {
+  try {
+    const response = await axios.get("https://api.spotify.com/v1/me", {
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        q: query,
-        type: types.join(","),
-        market: market,
-        limit: limit,
+        Authorization: "Bearer " + accessToken,
       },
     });
 
     return response.data;
   } catch (error) {
-    console.error("Error searching items:", error);
-    return null;
+    console.error("Error fetching user data:", error);
+    throw error;
   }
 };
 
@@ -54,7 +78,6 @@ export const getUserSavedAlbums = async (accessToken: string) => {
 
     console.log("User saved albums:", response.data);
     return response.data;
-    // Здесь вы можете обработать данные о сохраненных альбомах пользователя
   } catch (error) {
     console.error("Error fetching user saved albums:", error);
   }
