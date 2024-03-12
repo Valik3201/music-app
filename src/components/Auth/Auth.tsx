@@ -4,6 +4,7 @@ import { getToken, getUserData } from "../../api/spotify";
 import { redirectUri } from "../../constants/constants";
 import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
 import { AuthProps, User } from "./types";
+import HeroSection from "../HeroSection/HeroSection";
 
 const Auth: React.FC<AuthProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -75,9 +76,7 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
           {children}
         </div>
       ) : (
-        <div>
-          <button onClick={loginWithSpotifyClick}>Login with Spotify</button>
-        </div>
+        <HeroSection onLoginClick={loginWithSpotifyClick} />
       )}
     </div>
   );

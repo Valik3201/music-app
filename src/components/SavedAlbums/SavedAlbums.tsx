@@ -33,7 +33,7 @@ const SavedAlbums: React.FC = () => {
         {savedAlbums.map((album: any, index) => (
           <li key={index}>
             <img src={album.album.images[0].url} alt={album.album.name} />
-            <p>{album.album.name}</p>
+            <p className="font-bold">{album.album.name}</p>
             <p>
               {album.album.artists.map((artist: any) => artist.name).join(", ")}
             </p>

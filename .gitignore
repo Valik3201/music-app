@@ -38,3 +38,6 @@ dist/
 
 # Local Netlify folder
 .netlify
+
+# Constants
+src/constants/constants.ts
