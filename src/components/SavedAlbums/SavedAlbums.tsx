@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useToken } from "../hooks/useToken";
-import { getUserSavedAlbums } from "../api/spotify";
+import { useToken } from "../../hooks/useToken";
+import { getUserSavedAlbums } from "../../api/spotify";
+import { Album } from "./types";
 
 const SavedAlbums: React.FC = () => {
   const { accessToken } = useToken();
-  const [savedAlbums, setSavedAlbums] = useState<any[]>([]);
+  const [savedAlbums, setSavedAlbums] = useState<Album[]>([]);
 
   useEffect(() => {
     const fetchSavedAlbums = async () => {
