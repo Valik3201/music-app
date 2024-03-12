@@ -40,4 +40,4 @@ dist/
 .netlify
 
 # Constants
-src/constants/
+src/constants/constants.ts
