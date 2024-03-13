@@ -1,6 +1,10 @@
-import { HeroSectionProps } from "./types";
+import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
 
-const HeroSection: React.FC<HeroSectionProps> = ({ onLoginClick }) => {
+const HeroSection: React.FC = () => {
+  const loginWithSpotifyClick = async () => {
+    await redirectToSpotifyAuthorize();
+  };
+
   return (
     <>
       <div className="bg-gradient-to-br from-green to-transparent to-40% w-full h-96 absolute top-0 left-0 z-0"></div>
@@ -26,7 +30,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLoginClick }) => {
           </p>
           <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <button
-              onClick={onLoginClick}
+              onClick={loginWithSpotifyClick}
               className="text-black bg-green hover:opacity-80 transition duration-300 ease-in-out font-bold rounded-full text-md px-5 py-2.5 text-center me-2 mb-2"
             >
               Login with Spotify

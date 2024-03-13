@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useToken } from "../../hooks/useToken";
 import { getToken, getUserData } from "../../api/spotify";
 import { redirectUri } from "../../constants/constants";
-import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
 import { AuthProps, User } from "./types";
 import HeroSection from "../HeroSection/HeroSection";
 
@@ -51,10 +50,6 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
     }
   };
 
-  const loginWithSpotifyClick = async () => {
-    await redirectToSpotifyAuthorize();
-  };
-
   const logoutClick = () => {
     localStorage.clear();
     window.location.href = redirectUri;
@@ -67,16 +62,34 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
   };
 
   return (
-    <div>
+    <div className="antialiased">
       {isAuthenticated && user ? (
-        <div>
-          <button onClick={refreshTokenClick}>Refresh Token</button>
-          <button onClick={logoutClick}>Logout</button>
-          <h1>Welcome Back, {user.display_name}</h1>
-          {children}
-        </div>
+        <>
+          <aside className="fixed top-0 left-0 z-40 w-64 h-screen bg-black pt-14 transition-transform -translate-x-full border-r border-green md:translate-x-0">
+            <div className="overflow-y-auto py-5 px-3 h-full bg-black dark:bg-gray-800">
+              <div className="flex flex-col gap-4">
+                <h1 className="text-xl font-extrabold">
+                  Welcome Back, {user.display_name}
+                </h1>
+                <button
+                  onClick={refreshTokenClick}
+                  className="text-black bg-green hover:opacity-80 transition duration-300 ease-in-out font-bold rounded-full text-md px-5 py-2.5 text-center me-2 mb-2"
+                >
+                  Refresh Token
+                </button>
+                <button
+                  onClick={logoutClick}
+                  className="text-black bg-green hover:opacity-80 transition duration-300 ease-in-out font-bold rounded-full text-md px-5 py-2.5 text-center me-2 mb-2"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </aside>
+          <main className="p-4 md:ml-64 h-auto pt-20">{children}</main>
+        </>
       ) : (
-        <HeroSection onLoginClick={loginWithSpotifyClick} />
+        <HeroSection />
       )}
     </div>
   );
