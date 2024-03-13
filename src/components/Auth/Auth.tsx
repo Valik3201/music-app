@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useToken } from "../../hooks/useToken";
 import { getToken, getUserData } from "../../api/spotify";
 import { redirectUri } from "../../constants/constants";
-import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
 import { AuthProps, User } from "./types";
 import HeroSection from "../HeroSection/HeroSection";
 
@@ -51,10 +50,6 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
     }
   };
 
-  const loginWithSpotifyClick = async () => {
-    await redirectToSpotifyAuthorize();
-  };
-
   const logoutClick = () => {
     localStorage.clear();
     window.location.href = redirectUri;
@@ -76,7 +71,7 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
           {children}
         </div>
       ) : (
-        <HeroSection onLoginClick={loginWithSpotifyClick} />
+        <HeroSection />
       )}
     </div>
   );
