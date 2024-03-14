@@ -122,7 +122,7 @@ const SearchForm: React.FC = () => {
           {searchResults.tracks.length > 0 && (
             <div>
               <h2 className="text-3xl font-bold">Tracks</h2>
-              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 {searchResults.tracks.map((result: Track) => (
                   <li key={result.id} className="p-2 bg-grey/5 rounded-xl">
                     <div className="flex gap-4">
@@ -139,8 +139,10 @@ const SearchForm: React.FC = () => {
 
                       <div className="flex w-full justify-between items-center">
                         <div>
-                          <p className="font-medium">{result.name}</p>
-                          <p className="text-xs">
+                          <p className="font-medium truncate w-96 md:w-60">
+                            {result.name}
+                          </p>
+                          <p className="text-xs text-grey truncate w-96 md:w-60">
                             {result.album.artists
                               .map((item) => item.name)
                               .join(", ")}

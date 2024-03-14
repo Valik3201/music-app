@@ -28,7 +28,7 @@ const SavedAlbums: React.FC = () => {
                   className="h-auto max-w-full rounded-lg"
                 />
                 <p className="font-bold">{album.album.name}</p>
-                <p>
+                <p className="text-grey">
                   {album.album.artists
                     .map((artist: any) => artist.name)
                     .join(", ")}
