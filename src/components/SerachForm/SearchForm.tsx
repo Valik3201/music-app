@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useToken } from "../../hooks/useToken";
+import { useAppSelector } from "../../redux/hooks";
 import { searchSpotify } from "../../api/spotify";
 import { SearchResult, Artist, Album, Track, Playlist, Image } from "./types";
 
 const SearchForm: React.FC = () => {
-  const { accessToken } = useToken();
+  const currentToken = useAppSelector((state) => state.auth.currentToken);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<SearchResult>({
     artists: [],
@@ -18,11 +18,11 @@ const SearchForm: React.FC = () => {
     event.preventDefault();
 
     try {
-      if (!accessToken) {
+      if (!currentToken) {
         return;
       }
 
-      const data = await searchSpotify(accessToken, searchQuery);
+      const data = await searchSpotify(currentToken.access_token, searchQuery);
 
       setSearchResults({
         artists: data.artists.items,

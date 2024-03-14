@@ -1,30 +1,26 @@
-import { useState, useEffect } from "react";
-import { useToken } from "../../hooks/useToken";
-import { getToken, getUserData } from "../../api/spotify";
+import { useEffect } from "react";
 import { redirectUri } from "../../constants/constants";
-import { AuthProps, User } from "./types";
+import { AuthProps } from "./types";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import {
+  exchangeToken,
+  fetchUserData,
+  refreshToken,
+} from "../../redux/auth/authOperations";
+import { logout } from "../../redux/auth/authSlice";
 import HeroSection from "../HeroSection/HeroSection";
 
 const Auth: React.FC<AuthProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const { accessToken, saveToken, refreshAccessToken } = useToken();
+  const currentToken = useAppSelector((state) => state.auth.currentToken);
+  const user = useAppSelector((state) => state.auth.user);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (accessToken) {
-        try {
-          const userData = await getUserData(accessToken);
-          setUser(userData);
-          setIsAuthenticated(true);
-        } catch (error) {
-          console.error("Failed to fetch user data:", error);
-        }
-      }
-    };
-
-    fetchData();
-  }, [accessToken]);
+    if (currentToken && currentToken.access_token) {
+      dispatch(fetchUserData(currentToken.access_token));
+    }
+  }, [currentToken]);
 
   useEffect(() => {
     const args = new URLSearchParams(window.location.search);
@@ -35,13 +31,10 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
   const handleTokenExchange = async (code: string | null) => {
     if (code) {
       try {
-        const token = await getToken(code);
-        saveToken(token);
+        dispatch(exchangeToken(code));
 
-        // Remove code from URL after token exchange
         const url = new URL(window.location.href);
         url.searchParams.delete("code");
-
         const updatedUrl = url.search ? url.href : url.href.replace("?", "");
         window.history.replaceState({}, document.title, updatedUrl);
       } catch (error) {
@@ -53,12 +46,13 @@ const Auth: React.FC<AuthProps> = ({ children }) => {
   const logoutClick = () => {
     localStorage.clear();
     window.location.href = redirectUri;
-    setUser(null);
-    setIsAuthenticated(false);
+    dispatch(logout());
   };
 
-  const refreshTokenClick = async () => {
-    await refreshAccessToken();
+  const refreshTokenClick = () => {
+    if (currentToken && currentToken.refresh_token) {
+      dispatch(refreshToken(currentToken.refresh_token));
+    }
   };
 
   return (
