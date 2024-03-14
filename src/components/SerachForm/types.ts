@@ -8,6 +8,7 @@ export interface SearchResult {
 export interface Artist {
   id: string;
   name: string;
+  images: Image[];
 }
 
 export interface Album {
@@ -21,11 +22,15 @@ export interface Album {
 export interface Track {
   id: string;
   name: string;
+  album: Album;
+  images: Image[];
+  duration_ms: number;
 }
 
 export interface Playlist {
   id: string;
   name: string;
+  images: Image[];
 }
 
 export interface Image {
