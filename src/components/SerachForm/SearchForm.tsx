@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { searchSpotify } from "../../api/spotify";
 import { SearchResult, Artist, Album, Track, Playlist, Image } from "./types";
+import { Form } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const SearchForm: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  let [searchParams, setSearchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState<SearchResult>({
     artists: [],
     albums: [],
@@ -14,15 +17,13 @@ const SearchForm: React.FC = () => {
   });
   const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const performSearch = async (query: string) => {
     try {
       if (!currentToken) {
         return;
       }
 
-      const data = await searchSpotify(currentToken.access_token, searchQuery);
+      const data = await searchSpotify(currentToken.access_token, query);
 
       setSearchResults({
         artists: data.artists.items,
@@ -36,11 +37,25 @@ const SearchForm: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const queryParam = searchParams.get("q");
+    if (queryParam) {
+      setSearchQuery(queryParam);
+      performSearch(queryParam);
+    }
+  }, [searchParams]);
+
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSearchParams({ q: searchQuery });
+    performSearch(searchQuery);
+  };
+
   return (
     <div>
       <h2 className="text-3xl font-bold">Search</h2>
 
-      <form onSubmit={handleSearch} className="max-w-3xl">
+      <Form onSubmit={handleSearch} className="max-w-3xl" role="search">
         <label htmlFor="search" className="mb-2 text-sm font-medium sr-only">
           Search
         </label>
@@ -60,7 +75,7 @@ const SearchForm: React.FC = () => {
             Search
           </button>
         </div>
-      </form>
+      </Form>
 
       {error && <p>{error}</p>}
 
