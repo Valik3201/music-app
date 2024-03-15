@@ -20,21 +20,22 @@ const SavedAlbums: React.FC = () => {
         <div>
           <h2 className="text-3xl font-bold">Saved Albums</h2>
           <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {savedAlbums.map((album: any, index) => (
-              <li key={index}>
-                <img
-                  src={album.album.images[0].url}
-                  alt={album.album.name}
-                  className="h-auto max-w-full rounded-lg"
-                />
-                <p className="font-bold">{album.album.name}</p>
-                <p>
-                  {album.album.artists
-                    .map((artist: any) => artist.name)
-                    .join(", ")}
-                </p>
-              </li>
-            ))}
+            {savedAlbums &&
+              savedAlbums.map((album: any, index) => (
+                <li key={index}>
+                  <img
+                    src={album.album.images[0].url}
+                    alt={album.album.name}
+                    className="h-auto max-w-full rounded-lg"
+                  />
+                  <p className="font-bold">{album.album.name}</p>
+                  <p className="text-grey">
+                    {album.album.artists
+                      .map((artist: any) => artist.name)
+                      .join(", ")}
+                  </p>
+                </li>
+              ))}
           </ul>
         </div>
       )}
