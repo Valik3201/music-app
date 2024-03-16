@@ -3,7 +3,14 @@ import { exchangeToken, refreshToken, fetchUserData } from "./authOperations";
 
 export interface UserData {
   display_name: string;
-  id: number;
+
+  id: string;
+  images: {
+    url: string;
+    height: number;
+    width: number;
+  }[];
+  email: string;
 }
 
 export interface Token {
