@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { useRouteError } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -7,7 +6,7 @@ interface RouteError {
   message?: string;
 }
 
-const ErrorPage: FC = () => {
+const ErrorPage: React.FC = () => {
   const error = useRouteError() as RouteError;
 
   return (

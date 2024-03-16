@@ -2,12 +2,17 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { exchangeToken, fetchUserData } from "../../redux/auth/authOperations";
 import HeroSection from "../HeroSection/HeroSection";
-import Root from "../../Root/Root";
+import Root from "../Root/Root";
+import AutoLogout from "../AutoLogout/AutoLogout";
+import ModalSessionExpired from "../ModalSessionExpired/ModalSessionExpired";
 
 const Auth: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
   const user = useAppSelector((state) => state.auth.user);
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const isSessionExpired = useAppSelector(
+    (state) => state.auth.isSessionExpired
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,6 +45,12 @@ const Auth: React.FC = () => {
   return (
     <div className="antialiased">
       {isAuthenticated && user ? <Root /> : <HeroSection />}
+
+      {currentToken && currentToken.expires_in && (
+        <AutoLogout tokenExpirationDate={new Date(currentToken.expires_in)} />
+      )}
+
+      {isSessionExpired && <ModalSessionExpired />}
     </div>
   );
 };

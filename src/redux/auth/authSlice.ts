@@ -15,13 +15,17 @@ export interface UserData {
 
 export interface Token {
   access_token: string;
+  token_type: string;
+  expires_in: string;
   refresh_token: string;
+  scope: string;
 }
 
 export interface AuthState {
   currentToken: Token | null;
   user: UserData | null;
   isAuthenticated: boolean;
+  isSessionExpired: boolean;
   error: string | null;
 }
 
@@ -29,6 +33,7 @@ const initialState = {
   currentToken: null,
   user: null,
   isAuthenticated: false,
+  isSessionExpired: false,
   error: null,
 } satisfies AuthState as AuthState;
 
@@ -42,6 +47,9 @@ const authSlice = createSlice({
         user: null,
         isAuthenticated: false,
       });
+    },
+    setSessionExpired(state, action) {
+      state.isSessionExpired = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -67,10 +75,11 @@ const authSlice = createSlice({
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isAuthenticated = true;
+        state.isSessionExpired = false;
       });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setSessionExpired } = authSlice.actions;
 
 export default authSlice.reducer;

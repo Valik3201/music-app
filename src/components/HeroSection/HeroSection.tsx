@@ -12,7 +12,7 @@ const HeroSection: React.FC = () => {
             <br />
             with Spotify API Integration
           </h1>
-          <p className="mb-8 text-lg text-grey font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48">
+          <p className="mb-8 text-lg text-silver-400 font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48">
             This application integrates with{" "}
             <a
               href="https://developer.spotify.com/documentation/web-api"
@@ -21,10 +21,10 @@ const HeroSection: React.FC = () => {
             >
               Spotify Web API
             </a>{" "}
-            using OAuth2.0 with PKCE for secure authentication. Redux
-            efficiently manages token and application state. Users can explore
-            music and create playlists from Spotify within an intuitive
-            interface.
+            using <strong>OAuth2.0</strong> with <strong>PKCE</strong> for
+            secure authentication. Redux efficiently manages token and
+            application state. Users can explore music and create playlists from
+            Spotify within an intuitive interface.
           </p>
           <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <button
