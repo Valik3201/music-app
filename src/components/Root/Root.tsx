@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { redirectUri } from "../constants/constants";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { refreshToken } from "../redux/auth/authOperations";
-import { logout } from "../redux/auth/authSlice";
+import { redirectUri } from "../../constants/constants";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { refreshToken } from "../../redux/auth/authOperations";
+import { logout } from "../../redux/auth/authSlice";
 import { Outlet, NavLink } from "react-router-dom";
 import {
   HomeIconOutline,
   HomeIconSolid,
   SearchIconOutline,
   SearchIconSolid,
-} from "../icons/flowbite";
+} from "../../icons/flowbite";
 
 const Root: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
