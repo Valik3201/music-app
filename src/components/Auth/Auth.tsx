@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { exchangeToken, fetchUserData } from "../../redux/auth/authOperations";
 import HeroSection from "../HeroSection/HeroSection";
 import Root from "../../Root/Root";
+import AutoLogout from "./AutoLgout";
 
 const Auth: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -40,6 +41,10 @@ const Auth: React.FC = () => {
   return (
     <div className="antialiased">
       {isAuthenticated && user ? <Root /> : <HeroSection />}
+
+      {currentToken && currentToken.expires_in && (
+        <AutoLogout tokenExpirationDate={new Date(currentToken.expires_in)} />
+      )}
     </div>
   );
 };
