@@ -31,6 +31,9 @@ export interface Playlist {
   id: string;
   name: string;
   images: Image[];
+  owner: {
+    display_name: string;
+  };
 }
 
 export interface Image {

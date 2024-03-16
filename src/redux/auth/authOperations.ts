@@ -7,45 +7,49 @@ import {
 } from "../../constants/constants";
 import { Token, UserData } from "./authSlice";
 
+const processTokenResponse = (response: any) => {
+  const expiresIn = response.data.expires_in;
+  const expirationDate = new Date();
+  const expiry = new Date(
+    expirationDate.getTime() + parseInt(expiresIn!) * 1000
+  );
+
+  const token = {
+    ...response.data,
+    expires_in: expiry.toString(),
+  };
+
+  return token;
+};
+
 export const exchangeToken = createAsyncThunk<Token, string>(
   "auth/exchangeToken",
   async (code) => {
-    if (code) {
-      const codeVerifier = localStorage.getItem("code_verifier");
+    if (!code) return;
 
-      try {
-        const response = await axios.post(
-          tokenEndpoint,
-          new URLSearchParams({
-            client_id: clientId,
-            grant_type: "authorization_code",
-            code: code,
-            redirect_uri: redirectUri,
-            code_verifier: codeVerifier!,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
-        );
+    const codeVerifier = localStorage.getItem("code_verifier");
 
-        const expiresIn = response.data.expires_in;
-        const expirationDate = new Date();
-        const expiry = new Date(
-          expirationDate.getTime() + parseInt(expiresIn!) * 1000
-        );
+    try {
+      const response = await axios.post(
+        tokenEndpoint,
+        new URLSearchParams({
+          client_id: clientId,
+          grant_type: "authorization_code",
+          code: code,
+          redirect_uri: redirectUri,
+          code_verifier: codeVerifier!,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
 
-        const token = {
-          ...response.data,
-          expires_in: expiry.toString(),
-        };
-
-        return token;
-      } catch (error) {
-        console.error("Error fetching token:", error);
-        throw error;
-      }
+      return processTokenResponse(response);
+    } catch (error) {
+      console.error("Error fetching token:", error);
+      throw error;
     }
   }
 );
@@ -68,7 +72,7 @@ export const refreshToken = createAsyncThunk<Token, string>(
         }
       );
 
-      return response.data;
+      return processTokenResponse(response);
     } catch (error) {
       console.error("Error refreshing token:", error);
       throw error;

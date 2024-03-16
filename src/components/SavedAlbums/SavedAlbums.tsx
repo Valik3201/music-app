@@ -18,8 +18,8 @@ const SavedAlbums: React.FC = () => {
     <>
       {isAuthenticated && (
         <div>
-          <h2 className="text-3xl font-bold">Saved Albums</h2>
-          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <h2 className="text-3xl font-black pb-4">Saved Albums</h2>
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-4">
             {savedAlbums &&
               savedAlbums.map((album: any, index) => (
                 <li key={index}>
@@ -29,7 +29,7 @@ const SavedAlbums: React.FC = () => {
                     className="h-auto max-w-full rounded-lg"
                   />
                   <p className="font-bold">{album.album.name}</p>
-                  <p className="text-grey">
+                  <p className="text-silver-400">
                     {album.album.artists
                       .map((artist: any) => artist.name)
                       .join(", ")}
