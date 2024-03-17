@@ -166,7 +166,7 @@ const Root: React.FC = () => {
                 {userPlaylists.map((playlist: any) => (
                   <li key={playlist.id}>
                     <NavLink
-                      to="/all-playlists"
+                      to={`/playlist/${playlist.id}`}
                       className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
                     >
                       {({ isActive }) => (

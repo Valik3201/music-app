@@ -31,7 +31,6 @@ export const getUserPlaylists = createAsyncThunk(
         }
       );
 
-      console.debug(response.data.items);
       return response.data.items;
     } catch (error) {
       console.error("Error fetching user playlists:", error);
