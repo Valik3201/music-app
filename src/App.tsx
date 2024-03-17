@@ -5,6 +5,7 @@ import SavedAlbums from "./components/SavedAlbums/SavedAlbums";
 import SearchForm from "./components/SerachForm/SearchForm";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Playlists from "./components/Playlists/Playlists";
+import PlaylistItem from "./components/PlaylistItem/PlaylistItem";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/all-playlists",
         element: <Playlists />,
+      },
+      {
+        path: "playlist/:playlistID",
+        element: <PlaylistItem />,
       },
     ],
   },
