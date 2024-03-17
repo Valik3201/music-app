@@ -3,7 +3,6 @@ import { exchangeToken, refreshToken, fetchUserData } from "./authOperations";
 
 export interface UserData {
   display_name: string;
-
   id: string;
   images: {
     url: string;
