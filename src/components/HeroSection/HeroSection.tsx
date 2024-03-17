@@ -10,7 +10,7 @@ const HeroSection: React.FC = () => {
           <h1 className="mb-8 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">
             React + TypeScript + Vite App
             <br />
-            with Spotify API Integration
+            with Spotify Web API
           </h1>
           <p className="mb-8 text-lg text-silver-400 font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48">
             This application integrates with{" "}

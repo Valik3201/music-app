@@ -4,6 +4,7 @@ import Auth from "./components/Auth/Auth";
 import SavedAlbums from "./components/SavedAlbums/SavedAlbums";
 import SearchForm from "./components/SerachForm/SearchForm";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
+import Playlists from "./components/Playlists/Playlists";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <SearchForm />,
+      },
+      {
+        path: "/all-playlists",
+        element: <Playlists />,
       },
     ],
   },

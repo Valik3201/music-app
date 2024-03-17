@@ -4,4 +4,4 @@ export const redirectUri = "http://localhost:5173";
 export const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 export const tokenEndpoint = "https://accounts.spotify.com/api/token";
 export const scope =
-  "user-read-private user-read-email user-library-read playlist-modify-public playlist-modify-private";
+  "user-read-private user-read-email user-library-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative";
