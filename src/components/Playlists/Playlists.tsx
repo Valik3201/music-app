@@ -30,7 +30,10 @@ const Playlists: React.FC = () => {
           <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-4">
             {userPlailists &&
               userPlailists.map((playlist: any) => (
-                <li key={playlist.id}>
+                <li
+                  key={playlist.id}
+                  className="hover:opacity-70 transition duration-200 ease-in-out"
+                >
                   <Link to={`/playlist/${playlist.id}`}>
                     <img
                       src={playlist.images[0].url}
