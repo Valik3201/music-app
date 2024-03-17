@@ -163,21 +163,27 @@ const Root: React.FC = () => {
                     )}
                   </NavLink>
                 </li>
-                {userPlaylists.map((playlist: any) => (
-                  <li key={playlist.id}>
-                    <NavLink
-                      to={`/playlist/${playlist.id}`}
-                      className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
-                    >
-                      {({ isActive }) => (
-                        <>
-                          {isActive ? <ListMusicSolid /> : <ListMusicOutline />}
-                          {playlist.name}
-                        </>
-                      )}
-                    </NavLink>
-                  </li>
-                ))}
+                {Object.values(userPlaylists)
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((playlist: any) => (
+                    <li key={playlist.id}>
+                      <NavLink
+                        to={`/playlist/${playlist.id}`}
+                        className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                      >
+                        {({ isActive }) => (
+                          <>
+                            {isActive ? (
+                              <ListMusicSolid />
+                            ) : (
+                              <ListMusicOutline />
+                            )}
+                            {playlist.name}
+                          </>
+                        )}
+                      </NavLink>
+                    </li>
+                  ))}
               </ul>
             )}
           </div>
