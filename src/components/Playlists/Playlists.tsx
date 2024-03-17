@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { getUserPlaylists } from "../../redux/userData/userDataOperations";
+import { Link } from "react-router-dom";
 
 const Playlists: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -30,15 +31,17 @@ const Playlists: React.FC = () => {
             {userPlailists &&
               userPlailists.map((playlist: any) => (
                 <li key={playlist.id}>
-                  <img
-                    src={playlist.images[0].url}
-                    alt={playlist.name}
-                    className="h-auto max-w-full rounded-lg mb-2"
-                  />
-                  <p className="font-bold">{playlist.name}</p>
-                  <p className="text-silver-400">
-                    {playlist.owner.display_name}
-                  </p>
+                  <Link to={`/playlist/${playlist.id}`}>
+                    <img
+                      src={playlist.images[0].url}
+                      alt={playlist.name}
+                      className="h-auto max-w-full rounded-lg mb-2"
+                    />
+                    <p className="font-bold">{playlist.name}</p>
+                    <p className="text-silver-400">
+                      {playlist.owner.display_name}
+                    </p>
+                  </Link>
                 </li>
               ))}
           </ul>
