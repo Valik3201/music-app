@@ -47,10 +47,10 @@ const SearchForm: React.FC = () => {
       });
 
       if (
-        searchResults.albums.total === 0 &&
-        searchResults.tracks.total === 0 &&
-        searchResults.artists.total === 0 &&
-        searchResults.playlists.total === 0
+        data.albums.total === 0 &&
+        data.tracks.total === 0 &&
+        data.artists.total === 0 &&
+        data.playlists.total === 0
       ) {
         setError("Nothing found matching your request. Please try again.");
       } else {
