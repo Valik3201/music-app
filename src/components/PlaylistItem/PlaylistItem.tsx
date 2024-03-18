@@ -63,7 +63,7 @@ const PlaylistItem = () => {
                 </a>
               </div>
 
-              <p className="text-silver-400">{playlist.description}</p>
+              <p className="text-silver-400 w-96">{playlist.description}</p>
             </div>
           </div>
 
