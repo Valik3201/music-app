@@ -15,7 +15,6 @@ export const searchSpotify = async (
       },
     });
 
-    console.debug(response.data);
     return response.data;
   } catch (error) {
     console.error("Error searching:", error);

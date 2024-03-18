@@ -1,43 +1,53 @@
 export interface SearchResult {
-  artists: Artist[];
-  albums: Album[];
-  tracks: Track[];
-  playlists: Playlist[];
+  artists: {
+    total: number;
+    items: Artist[];
+  };
+  albums: {
+    total: number;
+    items: Album[];
+  };
+  tracks: {
+    total: number;
+    items: Track[];
+  };
+  playlists: {
+    total: number;
+    items: Playlist[];
+  };
 }
 
 export interface Artist {
   id: string;
   name: string;
-  images: Image[];
+  images: { url: string }[];
+  external_urls: { spotify: string };
 }
 
 export interface Album {
   id: string;
   name: string;
   artists: Artist[];
-  images: Image[];
+  images: { url: string }[];
   release_date: string;
+  external_urls: { spotify: string };
 }
 
 export interface Track {
   id: string;
   name: string;
   album: Album;
-  images: Image[];
+  images: { url: string }[];
   duration_ms: number;
+  external_urls: { spotify: string };
 }
 
 export interface Playlist {
   id: string;
   name: string;
-  images: Image[];
+  images: { url: string }[];
   owner: {
     display_name: string;
   };
-}
-
-export interface Image {
-  height: number;
-  url: string;
-  width: number;
+  external_urls: { spotify: string };
 }
