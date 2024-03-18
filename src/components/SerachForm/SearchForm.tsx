@@ -90,6 +90,7 @@ const SearchForm: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Enter your search query"
+            required
             className="block w-full p-4 ps-6 pe-24 text-sm border border-silver-400 rounded-full bg-black focus:outline-none focus:ring-2 focus:ring-green focus:border-green search-cancel:appearance-none"
           />
           <button
