@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUserSavedAlbums } from "./userDataOperations";
+import { fetchUserSavedAlbums, getUserPlaylists } from "./userDataOperations";
 
-export interface AlbumState {
+export interface UserDataState {
   albums: any[];
+  playlists: any[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 const initialState = {
   albums: [],
+  playlists: [],
   status: "idle",
   error: null,
-} satisfies AlbumState as AlbumState;
+} satisfies UserDataState as UserDataState;
 
-// Define slice
-const albumSlice = createSlice({
+const userDataSlice = createSlice({
   name: "albums",
   initialState,
   reducers: {},
@@ -32,8 +33,21 @@ const albumSlice = createSlice({
         state.error =
           action.error.message ?? "Failed to fetch user saved albums";
       });
+
+    builder
+      .addCase(getUserPlaylists.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getUserPlaylists.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.playlists = action.payload;
+      })
+      .addCase(getUserPlaylists.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? "Failed to fetch user playlists";
+      });
   },
 });
 
 // Export actions and reducer
-export default albumSlice.reducer;
+export default userDataSlice.reducer;

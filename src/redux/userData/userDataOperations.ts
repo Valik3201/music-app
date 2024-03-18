@@ -17,3 +17,23 @@ export const fetchUserSavedAlbums = createAsyncThunk(
     }
   }
 );
+
+export const getUserPlaylists = createAsyncThunk(
+  "playlists/getUserPlaylists",
+  async ({ accessToken, userID }: { accessToken: string; userID: string }) => {
+    try {
+      const response = await axios.get(
+        `https://api.spotify.com/v1/users/${userID}/playlists`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      return response.data.items;
+    } catch (error) {
+      console.error("Error fetching user playlists:", error);
+    }
+  }
+);

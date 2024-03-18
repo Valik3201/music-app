@@ -21,8 +21,8 @@ const SavedAlbums: React.FC = () => {
           <h2 className="text-3xl font-black pb-4">Saved Albums</h2>
           <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-4">
             {savedAlbums &&
-              savedAlbums.map((album: any, index) => (
-                <li key={index}>
+              savedAlbums.map((album: any) => (
+                <li key={album.album.id}>
                   <img
                     src={album.album.images[0].url}
                     alt={album.album.name}

@@ -15,27 +15,9 @@ export const searchSpotify = async (
       },
     });
 
-    console.debug(response.data);
     return response.data;
   } catch (error) {
     console.error("Error searching:", error);
     throw new Error("An error occurred while searching. Please try again.");
-  }
-};
-
-export const getPlaylist = async (accessToken: string, playlist_id: string) => {
-  try {
-    const response = await axios.get(
-      `https://api.spotify.com/v1/playlists/${playlist_id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetch playlist data:", error);
   }
 };

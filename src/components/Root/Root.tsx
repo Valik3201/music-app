@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { redirectUri } from "../../constants/constants";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { refreshToken } from "../../redux/auth/authOperations";
@@ -9,14 +9,32 @@ import {
   HomeIconSolid,
   SearchIconOutline,
   SearchIconSolid,
+  GridIconOutline,
+  GridIconSolid,
+  ListMusicSolid,
+  ListMusicOutline,
+  PlayIconSolid,
 } from "../../icons/flowbite";
+import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 
 const Root: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
   const user = useAppSelector((state) => state.auth.user);
+  const userPlaylists = useAppSelector((state) => state.data.playlists);
   const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (currentToken && currentToken.access_token && user && user.id) {
+      dispatch(
+        getUserPlaylists({
+          accessToken: currentToken.access_token,
+          userID: user.id,
+        })
+      );
+    }
+  }, [currentToken, user]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -39,7 +57,10 @@ const Root: React.FC = () => {
       <header className="bg-shark border-b border-shark px-4 py-2.5 fixed left-0 right-0 top-0 z-50">
         <div className="flex flex-wrap justify-between items-center">
           <div className="flex justify-start items-center">
-            <div className="text-xl font-black">Music App</div>
+            <div className="flex items-center text-xl font-black">
+              <PlayIconSolid />
+              Music App
+            </div>
           </div>
 
           <div className="flex items-center lg:order-2 relative">
@@ -66,10 +87,10 @@ const Root: React.FC = () => {
               >
                 <div className="py-3 px-4">
                   <span className="block text-sm font-semibold">
-                    {user?.display_name}
+                    {user?.display_name ?? "No name"}
                   </span>
                   <span className="block text-sm text-silver-500 truncate">
-                    {user?.email}
+                    {user?.email ?? "No data"}
                   </span>
                 </div>
 
@@ -126,6 +147,39 @@ const Root: React.FC = () => {
                 </li>
               </ul>
             </nav>
+
+            {userPlaylists && (
+              <ul className="pt-5 space-y-2 border-t border-silver-400">
+                <li>
+                  <NavLink
+                    to="/all-playlists"
+                    className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {isActive ? <GridIconSolid /> : <GridIconOutline />}
+                        All Playlists
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                {userPlaylists.map((playlist: any) => (
+                  <li key={playlist.id}>
+                    <NavLink
+                      to={`/playlist/${playlist.id}`}
+                      className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                    >
+                      {({ isActive }) => (
+                        <>
+                          {isActive ? <ListMusicSolid /> : <ListMusicOutline />}
+                          {playlist.name}
+                        </>
+                      )}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </aside>
