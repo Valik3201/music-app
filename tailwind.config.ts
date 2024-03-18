@@ -24,7 +24,13 @@ export default {
         "950": "#363636",
       },
     },
-    extend: {},
+    extend: {
+      gridAutoColumns: {
+        5: "calc((100% - 4 * 1rem) / 5)",
+        3: "calc((100% - 4 * 1rem) / 3)",
+        2: "calc((100% - 4 * 1rem) / 2)",
+      },
+    },
   },
   plugins: [
     plugin(({ addVariant }) => {

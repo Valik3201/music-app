@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { searchSpotify } from "../../api/spotify";
-import { SearchResult, Artist, Album, Track, Playlist, Image } from "./types";
+import { SearchResult, Artist, Album, Track, Playlist } from "./types";
 import { Form } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import { Carousel, CarouselItem } from "./Carousel";
 
 const SearchForm: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
   const [searchQuery, setSearchQuery] = useState<string>("");
   let [searchParams, setSearchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState<SearchResult>({
-    artists: [],
-    albums: [],
-    tracks: [],
-    playlists: [],
+    artists: { total: 0, items: [] },
+    albums: { total: 0, items: [] },
+    tracks: { total: 0, items: [] },
+    playlists: { total: 0, items: [] },
   });
+
   const [error, setError] = useState<string | null>(null);
 
   const performSearch = async (query: string) => {
@@ -26,11 +28,24 @@ const SearchForm: React.FC = () => {
       const data = await searchSpotify(currentToken.access_token, query);
 
       setSearchResults({
-        artists: data.artists.items,
-        albums: data.albums.items,
-        tracks: data.tracks.items,
-        playlists: data.playlists.items,
+        artists: {
+          total: data.artists.total,
+          items: data.artists.items,
+        },
+        albums: {
+          total: data.albums.total,
+          items: data.albums.items,
+        },
+        tracks: {
+          total: data.tracks.total,
+          items: data.tracks.items,
+        },
+        playlists: {
+          total: data.playlists.total,
+          items: data.playlists.items,
+        },
       });
+
       setError(null);
     } catch (error: any) {
       setError(error.message);
@@ -77,147 +92,189 @@ const SearchForm: React.FC = () => {
         </div>
       </Form>
 
-      {error && (
-        <div
-          className="flex items-center p-4 mb-4 text-sm rounded-lg bg-red-50"
-          role="alert"
-        >
-          <svg
-            className="flex-shrink-0 inline w-4 h-4 me-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-          </svg>
-          <span className="sr-only">Error</span>
-          <div>
-            <span className="font-medium">Oophs!</span> {error}
-          </div>
-        </div>
-      )}
+      {error ||
+        (searchResults.albums.total === 0 &&
+          searchResults.tracks.total === 0 &&
+          searchResults.artists.total === 0 &&
+          searchResults.playlists.total === 0 && (
+            <div
+              className="flex items-center p-4 mb-4 text-sm rounded-lg bg-red-50"
+              role="alert"
+            >
+              <svg
+                className="flex-shrink-0 inline w-4 h-4 me-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <span className="sr-only">Error</span>
+              <div>
+                <span className="font-medium">Oophs! </span>
+                {error ||
+                  "Nothing found matching your request. Please try again."}
+              </div>
+            </div>
+          ))}
 
       {!error && (
         <div>
-          {searchResults.albums.length > 0 && (
+          {searchResults.albums.total > 0 && (
             <div>
               <h2 className="text-3xl font-black pb-4">Albums</h2>
-              <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-4">
-                {searchResults.albums.slice(0, 10).map((result: Album) => (
-                  <li key={result.id}>
-                    {result.images.map(
-                      (image: Image, index) =>
-                        image.height === 640 && (
-                          <img
-                            key={index}
-                            src={image.url}
-                            alt={result.name}
-                            className="h-auto max-w-full rounded-lg"
-                          />
-                        )
-                    )}
 
-                    <p className="font-bold">{result.name}</p>
-                    <p className="text-silver-400">
-                      <span>{result.release_date.split("-")[0]} • </span>
-                      {result.artists.map((item) => item.name).join(", ")}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {searchResults.artists.length > 0 && (
-            <div>
-              <h2 className="text-3xl font-black pb-4">Artists</h2>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
-                {searchResults.artists.slice(0, 10).map((result: Artist) => (
-                  <li key={result.id} className="flex gap-4 items-center">
-                    <div className="bg-green w-16 h-16 rounded-full">
+              <Carousel>
+                {searchResults.albums.items.map((result: Album) => (
+                  <CarouselItem key={result.id}>
+                    <a
+                      href={result.external_urls.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {result.images && result.images[0] && (
                         <img
                           src={result.images[0]?.url}
                           alt={result.name}
-                          className="object-cover w-16 h-16 rounded-full"
+                          className="object-cover rounded-lg hover:opacity-70 transition duration-200 ease-in-out mb-2"
                         />
                       )}
-                    </div>
 
-                    <p className="text-2xl font-bold">{result.name}</p>
-                  </li>
+                      <p className="font-bold ">{result.name}</p>
+                      <p className="text-silver-400 ">
+                        <span>{result.release_date.split("-")[0]} • </span>
+                        {result.artists.map((item) => item.name).join(", ")}
+                      </p>
+                    </a>
+                  </CarouselItem>
                 ))}
+              </Carousel>
+            </div>
+          )}
+
+          {searchResults.artists.total > 0 && (
+            <div>
+              <h2 className="text-3xl font-black pb-4">Artists</h2>
+              <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pb-4">
+                {searchResults.artists.items
+                  .slice(0, 10)
+                  .map((result: Artist) => (
+                    <li key={result.id}>
+                      <a
+                        href={result.external_urls.spotify}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex gap-4 items-center"
+                      >
+                        <div className="bg-green w-16 h-16 rounded-full">
+                          {result.images && result.images[0] && (
+                            <img
+                              src={result.images[0]?.url}
+                              alt={result.name}
+                              className="object-cover w-16 h-16 rounded-full"
+                            />
+                          )}
+                        </div>
+
+                        <p className="text-2xl font-extrabold">{result.name}</p>
+                      </a>
+                    </li>
+                  ))}
               </ul>
             </div>
           )}
 
-          {searchResults.tracks.length > 0 && (
+          {searchResults.tracks.total > 0 && (
             <div>
               <h2 className="text-3xl font-black pb-4">Tracks</h2>
-              <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 pb-4">
-                {searchResults.tracks.map((result: Track) => (
-                  <li key={result.id} className="p-2 bg-grey/5 rounded-xl">
-                    <div className="flex gap-4">
-                      {result.album.images.map((image: Image, index) =>
-                        image.height === 640 ? (
+              <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-2 pb-4">
+                {searchResults.tracks.items.map((result: Track) => (
+                  <li
+                    key={result.id}
+                    className="p-2 bg-shark/75 rounded-xl hover:bg-shark transition duration-200 ease-in-out"
+                  >
+                    <a
+                      href={result.external_urls.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div className="flex gap-4">
+                        {result.album.images && result.album.images[0] && (
                           <img
-                            key={index}
-                            src={image.url}
+                            src={result.album.images[0]?.url}
                             alt={result.name}
-                            className="h-12 w-12 rounded-md"
+                            className="w-12 h-12 object-cover rounded-md"
                           />
-                        ) : null
-                      )}
+                        )}
 
-                      <div className="flex w-full justify-between items-center">
-                        <div>
-                          <p className="font-medium truncate w-80 md:w-52">
-                            {result.name}
-                          </p>
-                          <p className="text-xs text-silver-400 truncate w-96 md:w-60">
-                            {result.album.artists
-                              .map((item) => item.name)
-                              .join(", ")}
-                          </p>
-                        </div>
+                        <div className="flex w-full justify-between items-center">
+                          <div>
+                            <p className="font-medium truncate w-80 md:w-52">
+                              {result.name}
+                            </p>
+                            <p className="text-xs text-silver-400 truncate w-96 md:w-60">
+                              {result.album.artists
+                                .map((item) => item.name)
+                                .join(", ")}
+                            </p>
+                          </div>
 
-                        <div className="pr-2">
-                          {Math.floor(result.duration_ms / 60000)}:
-                          {(
-                            "0" +
-                            Math.floor((result.duration_ms % 60000) / 1000)
-                          ).slice(-2)}
+                          <div className="pr-2">
+                            {Math.floor(result.duration_ms / 60000)}:
+                            {(
+                              "0" +
+                              Math.floor((result.duration_ms % 60000) / 1000)
+                            ).slice(-2)}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </a>
                   </li>
                 ))}
               </ul>
             </div>
           )}
 
-          {searchResults.playlists.length > 0 && (
+          {searchResults.playlists.total > 0 && (
             <div>
               <h2 className="text-3xl font-black pb-4">Playlists</h2>
-              <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-4">
-                {searchResults.playlists.map((result: Playlist) => (
-                  <li key={result.id}>
-                    <div className="bg-silver-400 aspect-square rounded-lg">
-                      <img
-                        src={result.images[0].url}
-                        alt={result.name}
-                        className="object-cover aspect-square rounded-lg"
-                      />
-                    </div>
+              <Carousel>
+                {searchResults.playlists.items.map((result: Playlist) => (
+                  <CarouselItem key={result.id}>
+                    <a
+                      href={result.external_urls.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div className="bg-shark aspect-square rounded-lg mb-2 hover:opacity-70 transition duration-200 ease-in-out">
+                        {result.images[0]?.url ? (
+                          <img
+                            src={result.images[0].url}
+                            alt={result.name}
+                            className="object-cover aspect-square rounded-lg"
+                          />
+                        ) : (
+                          <div className="flex justify-center items-center h-full">
+                            <svg
+                              role="img"
+                              viewBox="0 0 24 24"
+                              className="w-20 h-20 fill-silver-900"
+                            >
+                              <path d="M6 3h15v15.167a3.5 3.5 0 1 1-3.5-3.5H19V5H8v13.167a3.5 3.5 0 1 1-3.5-3.5H6V3zm0 13.667H4.5a1.5 1.5 0 1 0 1.5 1.5v-1.5zm13 0h-1.5a1.5 1.5 0 1 0 1.5 1.5v-1.5z"></path>
+                            </svg>
+                          </div>
+                        )}
+                      </div>
 
-                    <p className="font-bold">{result.name}</p>
-                    <p className="text-silver-400">
-                      {result.owner.display_name}
-                    </p>
-                  </li>
+                      <p className="font-bold">{result.name}</p>
+                      <p className="text-silver-400">
+                        {result.owner.display_name}
+                      </p>
+                    </a>
+                  </CarouselItem>
                 ))}
-              </ul>
+              </Carousel>
             </div>
           )}
         </div>
