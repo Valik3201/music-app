@@ -1,11 +1,13 @@
 import axios from "axios";
 
+axios.defaults.baseURL = "https://api.spotify.com/v1";
+
 export const searchSpotify = async (
   accessToken: string,
   searchQuery: string
 ) => {
   try {
-    const response = await axios.get("https://api.spotify.com/v1/search", {
+    const response = await axios.get("/search", {
       params: {
         q: searchQuery,
         type: "album,artist,playlist,track",
@@ -25,8 +27,28 @@ export const searchSpotify = async (
 
 export const getPlaylist = async (accessToken: string, playlist_id: string) => {
   try {
-    const response = await axios.get(
-      `https://api.spotify.com/v1/playlists/${playlist_id}`,
+    const response = await axios.get(`/playlists/${playlist_id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    console.debug(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetch playlist data:", error);
+  }
+};
+
+export const createPlaylist = async (
+  accessToken: string,
+  user_id: string,
+  playlistData: { name: string; description: string; public: boolean }
+) => {
+  try {
+    const response = await axios.post(
+      `/users/${user_id}/playlists`,
+      playlistData,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -37,6 +59,6 @@ export const getPlaylist = async (accessToken: string, playlist_id: string) => {
     console.debug(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetch playlist data:", error);
+    console.error("Error creating playlist:", error);
   }
 };

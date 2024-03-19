@@ -132,6 +132,7 @@ const Root: React.FC = () => {
                     )}
                   </NavLink>
                 </li>
+
                 <li>
                   <NavLink
                     to="/search"
@@ -141,6 +142,20 @@ const Root: React.FC = () => {
                       <>
                         {isActive ? <SearchIconSolid /> : <SearchIconOutline />}
                         Search
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/create-playlist"
+                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {isActive ? <ListMusicSolid /> : <ListMusicOutline />}
+                        Create Playlist
                       </>
                     )}
                   </NavLink>
