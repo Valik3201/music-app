@@ -10,6 +10,7 @@ export interface UserData {
     width: number;
   }[];
   email: string;
+  external_urls: { spotify: string };
 }
 
 export interface Token {

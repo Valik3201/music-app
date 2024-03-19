@@ -4,17 +4,8 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { refreshToken } from "../../redux/auth/authOperations";
 import { logout } from "../../redux/auth/authSlice";
 import { Outlet, NavLink } from "react-router-dom";
-import {
-  HomeIconOutline,
-  HomeIconSolid,
-  SearchIconOutline,
-  SearchIconSolid,
-  GridIconOutline,
-  GridIconSolid,
-  ListMusicSolid,
-  ListMusicOutline,
-  PlayIconSolid,
-} from "../../icons/flowbite";
+import * as Icons from "../../icons/flowbite";
+
 import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 
 const Root: React.FC = () => {
@@ -58,7 +49,7 @@ const Root: React.FC = () => {
         <div className="flex flex-wrap justify-between items-center">
           <div className="flex justify-start items-center">
             <div className="flex items-center text-xl font-black">
-              <PlayIconSolid />
+              <Icons.PlayIconSolid />
               Music App
             </div>
           </div>
@@ -126,12 +117,17 @@ const Root: React.FC = () => {
                   >
                     {({ isActive }) => (
                       <>
-                        {isActive ? <HomeIconSolid /> : <HomeIconOutline />}
+                        {isActive ? (
+                          <Icons.HomeIconSolid />
+                        ) : (
+                          <Icons.HomeIconOutline />
+                        )}
                         Home
                       </>
                     )}
                   </NavLink>
                 </li>
+
                 <li>
                   <NavLink
                     to="/search"
@@ -139,10 +135,24 @@ const Root: React.FC = () => {
                   >
                     {({ isActive }) => (
                       <>
-                        {isActive ? <SearchIconSolid /> : <SearchIconOutline />}
+                        {isActive ? (
+                          <Icons.SearchIconSolid />
+                        ) : (
+                          <Icons.SearchIconOutline />
+                        )}
                         Search
                       </>
                     )}
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/create-playlist"
+                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                  >
+                    <Icons.PlusIcon />
+                    Create Playlist
                   </NavLink>
                 </li>
               </ul>
@@ -157,27 +167,37 @@ const Root: React.FC = () => {
                   >
                     {({ isActive }) => (
                       <>
-                        {isActive ? <GridIconSolid /> : <GridIconOutline />}
+                        {isActive ? (
+                          <Icons.GridIconSolid />
+                        ) : (
+                          <Icons.GridIconOutline />
+                        )}
                         All Playlists
                       </>
                     )}
                   </NavLink>
                 </li>
-                {userPlaylists.map((playlist: any) => (
-                  <li key={playlist.id}>
-                    <NavLink
-                      to={`/playlist/${playlist.id}`}
-                      className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
-                    >
-                      {({ isActive }) => (
-                        <>
-                          {isActive ? <ListMusicSolid /> : <ListMusicOutline />}
-                          {playlist.name}
-                        </>
-                      )}
-                    </NavLink>
-                  </li>
-                ))}
+                {Object.values(userPlaylists)
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((playlist: any) => (
+                    <li key={playlist.id}>
+                      <NavLink
+                        to={`/playlist/${playlist.id}`}
+                        className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                      >
+                        {({ isActive }) => (
+                          <>
+                            {isActive ? (
+                              <Icons.ListMusicSolid />
+                            ) : (
+                              <Icons.ListMusicOutline />
+                            )}
+                            {playlist.name}
+                          </>
+                        )}
+                      </NavLink>
+                    </li>
+                  ))}
               </ul>
             )}
           </div>

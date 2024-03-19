@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 import { Link } from "react-router-dom";
+import PlaylistCover from "../PlaylistCover/PlaylistCover";
 
 const Playlists: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -30,13 +31,23 @@ const Playlists: React.FC = () => {
           <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-2">
             {userPlailists &&
               userPlailists.map((playlist: any) => (
-                <li key={playlist.id}>
+                <li
+                  key={playlist.id}
+                  className="hover:opacity-70 transition duration-200 ease-in-out"
+                >
                   <Link to={`/playlist/${playlist.id}`}>
-                    <img
-                      src={playlist.images[0].url}
-                      alt={playlist.name}
-                      className="h-auto max-w-full rounded-lg mb-2 hover:opacity-80 transition duration-200 ease-in-out"
-                    />
+                    <div className="bg-shark aspect-square rounded-lg mb-2 hover:opacity-70 transition duration-200 ease-in-out">
+                      {playlist.images[0]?.url ? (
+                        <img
+                          src={playlist.images[0].url}
+                          alt={playlist.name}
+                          className="object-cover aspect-square rounded-lg"
+                        />
+                      ) : (
+                        <PlaylistCover />
+                      )}
+                    </div>
+
                     <p className="font-bold">{playlist.name}</p>
                     <p className="text-silver-400">
                       {playlist.owner.display_name}
