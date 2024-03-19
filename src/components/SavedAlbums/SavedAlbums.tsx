@@ -23,17 +23,23 @@ const SavedAlbums: React.FC = () => {
             {savedAlbums &&
               savedAlbums.map((album: any) => (
                 <li key={album.album.id}>
-                  <img
-                    src={album.album.images[0].url}
-                    alt={album.album.name}
-                    className="h-auto max-w-full rounded-lg"
-                  />
-                  <p className="font-bold">{album.album.name}</p>
-                  <p className="text-silver-400">
-                    {album.album.artists
-                      .map((artist: any) => artist.name)
-                      .join(", ")}
-                  </p>
+                  <a
+                    href={album.album.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={album.album.images[0].url}
+                      alt={album.album.name}
+                      className="h-auto max-w-full rounded-lg mb-2 hover:opacity-80 transition duration-200 ease-in-out"
+                    />
+                    <p className="font-bold">{album.album.name}</p>
+                    <p className="text-silver-400">
+                      {album.album.artists
+                        .map((artist: any) => artist.name)
+                        .join(", ")}
+                    </p>
+                  </a>
                 </li>
               ))}
           </ul>

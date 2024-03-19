@@ -27,7 +27,7 @@ const Playlists: React.FC = () => {
         <div>
           <h2 className="text-3xl font-black pb-4">Playlists</h2>
 
-          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-4">
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-2">
             {userPlailists &&
               userPlailists.map((playlist: any) => (
                 <li
