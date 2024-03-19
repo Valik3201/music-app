@@ -205,3 +205,43 @@ export const PlayIconSolid = () => (
     />
   </svg>
 );
+
+export const PlusIcon = () => (
+  <svg
+    className="w-6 h-6 text-gray-800 dark:text-white"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M5 12h14m-7 7V5"
+    />
+  </svg>
+);
+
+export const CheckIcon = () => (
+  <svg
+    className="w-5 h-5 absolute top-0.5 left-0 z-10 invisible peer-checked:visible text-black bg-green border-green rounded"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M5 11.917 9.724 16.5 19 7.5"
+    />
+  </svg>
+);

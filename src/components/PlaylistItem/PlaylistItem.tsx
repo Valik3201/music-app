@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPlaylist } from "../../api/spotify";
 import { useAppSelector } from "../../redux/hooks";
+import PlaylistCover from "../PlaylistCover/PlaylistCover";
 import * as Types from "./types";
 
 const PlaylistItem = () => {
@@ -39,12 +40,18 @@ const PlaylistItem = () => {
     <>
       {playlist && (
         <div className="mt-4">
-          <div className="flex gap-4">
-            <img
-              src={playlist.images[0].url}
-              alt={playlist.name}
-              className="w-64 h-64 rounded-lg mb-2 mr-4 shadow-2xl shadow-white/15"
-            />
+          <div className="flex gap-4 flex-col lg:flex-row">
+            <div className="bg-shark w-64 h-64 rounded-lg mb-2 mr-4">
+              {playlist.images && playlist.images[0]?.url ? (
+                <img
+                  src={playlist.images[0].url}
+                  alt={playlist.name}
+                  className="object-cover aspect-square rounded-lg"
+                />
+              ) : (
+                <PlaylistCover />
+              )}
+            </div>
 
             <div className="flex flex-col gap-4">
               <p className="font-extrabold text-md text-silver-400 uppercase">
