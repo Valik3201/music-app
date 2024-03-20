@@ -1,9 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUserSavedAlbums, getUserPlaylists } from "./userDataOperations";
+import {
+  fetchUserSavedAlbums,
+  getUserPlaylists,
+  getUserTracks,
+} from "./userDataOperations";
 
 export interface UserDataState {
   albums: any[];
   playlists: any[];
+  tracks: any[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -11,6 +16,7 @@ export interface UserDataState {
 const initialState = {
   albums: [],
   playlists: [],
+  tracks: [],
   status: "idle",
   error: null,
 } satisfies UserDataState as UserDataState;
@@ -31,7 +37,7 @@ const userDataSlice = createSlice({
       .addCase(fetchUserSavedAlbums.rejected, (state, action) => {
         state.status = "failed";
         state.error =
-          action.error.message ?? "Failed to fetch user saved albums";
+          action.error.message ?? "Failed to fetch user's saved albums";
       });
 
     builder
@@ -44,7 +50,21 @@ const userDataSlice = createSlice({
       })
       .addCase(getUserPlaylists.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message ?? "Failed to fetch user playlists";
+        state.error =
+          action.error.message ?? "Failed to fetch user's playlists";
+      });
+
+    builder
+      .addCase(getUserTracks.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getUserTracks.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.tracks = action.payload;
+      })
+      .addCase(getUserTracks.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? "Failed to fetch user's tracks";
       });
   },
 });
