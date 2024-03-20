@@ -15,6 +15,11 @@ const Root: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     if (currentToken && currentToken.access_token && user && user.id) {
@@ -48,6 +53,14 @@ const Root: React.FC = () => {
       <header className="bg-shark border-b border-shark px-4 py-2.5 fixed left-0 right-0 top-0 z-50">
         <div className="flex flex-wrap justify-between items-center">
           <div className="flex justify-start items-center">
+            <button
+              onClick={toggleSidebar}
+              className="p-2 mr-2 text-silver-699 rounded-lg cursor-pointer md:hidden hover:bg-black/80 focus:bg-black/90 focus:ring-2 focus:ring-green"
+            >
+              <Icons.BarIcon />
+              <span className="sr-only">Toggle sidebar</span>
+            </button>
+
             <div className="flex items-center text-xl font-black">
               <Icons.PlayIconSolid />
               Music App
@@ -105,7 +118,11 @@ const Root: React.FC = () => {
         </div>
       </header>
 
-      <aside className="fixed top-0 left-0 z-40 w-64 h-screen bg-black pt-14 transition-transform -translate-x-full md:translate-x-0">
+      <aside
+        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-black pt-14 transition-transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
+      >
         <div className="overflow-y-auto py-5 px-3 h-full bg-shark">
           <div className="flex flex-col gap-4">
             <nav>
@@ -201,6 +218,10 @@ const Root: React.FC = () => {
               </ul>
             )}
           </div>
+        </div>
+
+        <div className="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-shark text-silver-400 text-xs font-medium z-20">
+          Copyright {new Date().getFullYear()}
         </div>
       </aside>
 

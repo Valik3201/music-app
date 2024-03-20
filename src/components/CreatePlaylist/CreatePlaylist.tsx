@@ -3,6 +3,7 @@ import { createPlaylist } from "../../api/spotify";
 import { useAppSelector } from "../../redux/hooks";
 import PlaylistCover from "../PlaylistCover/PlaylistCover";
 import { CheckIcon } from "../../icons/flowbite";
+
 interface PlaylistData {
   name: string;
   description: string;
@@ -50,7 +51,7 @@ const CreatePlaylist: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-3xl font-black pb-4">Create Playlist</h2>
+      <h2 className="text-3xl font-black pb-4">New Playlist</h2>
 
       <form>
         <div className="flex gap-4 flex-col lg:flex-row">
