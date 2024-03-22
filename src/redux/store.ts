@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
 import authReducer, { AuthState } from "./auth/authSlice";
-import albumsReducer, { UserDataState } from "./userData/userDataSlice";
+import userDataReucer, { UserDataState } from "./userData/userDataSlice";
 
 export interface RootState {
   auth: AuthState;
@@ -18,7 +18,7 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
-  data: albumsReducer,
+  data: userDataReucer,
 });
 
 export const store = configureStore({

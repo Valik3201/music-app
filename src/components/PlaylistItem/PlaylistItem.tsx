@@ -2,8 +2,21 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPlaylist } from "../../api/spotify";
 import { useAppSelector } from "../../redux/hooks";
-import PlaylistCover from "../PlaylistCover/PlaylistCover";
 import * as Types from "./types";
+import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
+import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
+
+const {
+  Playlist,
+  PlaylistHeader,
+  PlaylistInfo,
+  Type,
+  Title,
+  Artist,
+  Description,
+  Table,
+  SongCount,
+} = PlaylistComponents;
 
 const PlaylistItem = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -39,27 +52,24 @@ const PlaylistItem = () => {
   return (
     <>
       {playlist && (
-        <div className="mt-4">
-          <div className="flex gap-4 flex-col lg:flex-row">
-            <div className="bg-shark w-64 h-64 rounded-lg mb-2 mr-4">
-              {playlist.images && playlist.images[0]?.url ? (
+        <Playlist>
+          <PlaylistHeader>
+            {" "}
+            {playlist.images && playlist.images[0]?.url ? (
+              <div className="bg-shark w-64 h-64 rounded-lg mb-2 mr-4">
                 <img
                   src={playlist.images[0].url}
                   alt={playlist.name}
                   className="object-cover aspect-square rounded-lg"
                 />
-              ) : (
-                <PlaylistCover />
-              )}
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <p className="font-extrabold text-md text-silver-400 uppercase">
-                {playlist.type}
-              </p>
-              <div>
-                <h2 className="text-4xl font-black">{playlist.name}</h2>
-
+              </div>
+            ) : (
+              <PlaylistCover />
+            )}
+            <PlaylistInfo>
+              <Type>{playlist.type}</Type>
+              <Title>{playlist.name}</Title>
+              <Artist>
                 <a
                   href={playlist.owner.external_urls.spotify}
                   target="_blank"
@@ -68,71 +78,58 @@ const PlaylistItem = () => {
                 >
                   {playlist.owner.display_name}
                 </a>
-              </div>
+              </Artist>
+              <Description>{playlist.description}</Description>
+            </PlaylistInfo>
+          </PlaylistHeader>
 
-              <p className="text-silver-400 w-96">{playlist.description}</p>
-            </div>
-          </div>
-
-          <table className="table-fixed w-full text-sm mt-4">
-            <thead>
-              <tr className="text-left">
-                <th className="w-4/12 py-2">Song</th>
-                <th className="w-3/12 py-2">Artist</th>
-                <th className="w-3/12 py-2">Album</th>
-                <th className="w-1/12 py-2 text-center ">Duration</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-silver-900">
-              {playlist.tracks.items.map((item) => (
-                <tr key={item.track.id}>
-                  <td className="flex gap-4 items-center py-2">
-                    <img
-                      src={item.track.album.images[0].url}
-                      alt={item.track.name}
-                      className="h-10 w-10 rounded-md"
-                    />
-                    <p className="font-bold truncate">{item.track.name}</p>
-                  </td>
-                  <td className="text-silver-400 truncate py-2">
-                    {item.track.artists.map((artist, index) => [
-                      <a
-                        key={artist.id}
-                        href={artist.external_urls.spotify}
-                        className="hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {artist.name}
-                      </a>,
-                      index !== item.track.artists.length - 1 && ", ",
-                    ])}
-                  </td>
-                  <td className="text-silver-400 truncate py-2">
+          <Table>
+            {playlist.tracks.items.map((item) => (
+              <tr key={item.track.id}>
+                <td className="flex gap-4 items-center py-2">
+                  <img
+                    src={item.track.album.images[0].url}
+                    alt={item.track.name}
+                    className="h-10 w-10 rounded-md"
+                  />
+                  <p className="font-bold truncate">{item.track.name}</p>
+                </td>
+                <td className="text-silver-400 truncate py-2">
+                  {item.track.artists.map((artist, index) => [
                     <a
-                      href={item.track.album.external_urls.spotify}
+                      key={artist.id}
+                      href={artist.external_urls.spotify}
+                      className="hover:underline"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:underline"
                     >
-                      {item.track.album.name}
-                    </a>
-                  </td>
-                  <td className="text-silver-400 text-center py-2">
-                    {Math.floor(item.track.duration_ms / 60000)}:
-                    {(
-                      "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
-                    ).slice(-2)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      {artist.name}
+                    </a>,
+                    index !== item.track.artists.length - 1 && ", ",
+                  ])}
+                </td>
+                <td className="text-silver-400 truncate py-2">
+                  <a
+                    href={item.track.album.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {item.track.album.name}
+                  </a>
+                </td>
+                <td className="text-silver-400 text-center py-2">
+                  {Math.floor(item.track.duration_ms / 60000)}:
+                  {(
+                    "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
+                  ).slice(-2)}
+                </td>
+              </tr>
+            ))}
+          </Table>
 
-          <p className="font-bold text-silver-400 text-sm py-4">
-            {playlist.tracks.total} songs
-          </p>
-        </div>
+          <SongCount>{playlist.tracks.total} songs</SongCount>
+        </Playlist>
       )}
     </>
   );

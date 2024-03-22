@@ -4,8 +4,8 @@ import { searchSpotify } from "../../api/spotify";
 import { SearchResult, Artist, Album, Track, Playlist } from "./types";
 import { Form } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { Carousel, CarouselItem } from "./Carousel";
-import PlaylistCover from "../PlaylistCover/PlaylistCover";
+import { Carousel, CarouselItem } from "../ui/Carousel/Carousel";
+import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 
 const SearchForm: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);

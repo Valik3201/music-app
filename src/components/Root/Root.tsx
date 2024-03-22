@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { refreshToken } from "../../redux/auth/authOperations";
 import { logout } from "../../redux/auth/authSlice";
 import { Outlet, NavLink } from "react-router-dom";
-import * as Icons from "../../icons/flowbite";
+import * as Icons from "../ui/icons/flowbite";
 
 import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 
@@ -168,8 +168,16 @@ const Root: React.FC = () => {
                     to="/create-playlist"
                     className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
                   >
-                    <Icons.PlusIcon />
-                    Create Playlist
+                    {({ isActive }) => (
+                      <>
+                        {isActive ? (
+                          <Icons.PlusIcon green />
+                        ) : (
+                          <Icons.PlusIcon />
+                        )}
+                        Create Playlist
+                      </>
+                    )}
                   </NavLink>
                 </li>
               </ul>
@@ -190,6 +198,24 @@ const Root: React.FC = () => {
                           <Icons.GridIconOutline />
                         )}
                         All Playlists
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/favorite"
+                    className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {isActive ? (
+                          <Icons.StarIconSolid />
+                        ) : (
+                          <Icons.StarIconOutline />
+                        )}
+                        Favorite Songs
                       </>
                     )}
                   </NavLink>
