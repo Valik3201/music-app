@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createPlaylist } from "../../api/spotify";
 import { useAppSelector } from "../../redux/hooks";
-import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 import { CheckIcon } from "../ui/icons/flowbite";
+import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 
 interface PlaylistData {
   name: string;
@@ -55,8 +55,8 @@ const CreatePlaylist: React.FC = () => {
 
       <form>
         <div className="flex gap-4 flex-col lg:flex-row">
-          <div className="bg-shark w-72 h-72 flex-shrink-0 rounded-lg mb-2 mr-4">
-            <PlaylistCover />
+          <div className="bg-shark flex-shrink-0 rounded-lg mb-2 mr-4">
+            <PlaylistCover size={"w-72 h-72"} />
           </div>
 
           <div className="flex flex-col gap-4 w-full">
