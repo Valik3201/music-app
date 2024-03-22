@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 import { Link } from "react-router-dom";
-import PlaylistCover from "../PlaylistCover/PlaylistCover";
+import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 
 const Playlists: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);

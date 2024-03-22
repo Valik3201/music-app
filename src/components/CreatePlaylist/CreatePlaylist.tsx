@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createPlaylist } from "../../api/spotify";
 import { useAppSelector } from "../../redux/hooks";
-import PlaylistCover from "../PlaylistCover/PlaylistCover";
-import { CheckIcon } from "../../icons/flowbite";
+import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
+import { CheckIcon } from "../ui/icons/flowbite";
 
 interface PlaylistData {
   name: string;
