@@ -7,6 +7,7 @@ import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Playlists from "./components/Playlists/Playlists";
 import PlaylistItem from "./components/PlaylistItem/PlaylistItem";
 import CreatePlaylist from "./components/CreatePlaylist/CreatePlaylist";
+import FavoriteSongs from "./components/FavoriteSongs/FavoriteSongs";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "create-playlist",
         element: <CreatePlaylist />,
+      },
+      {
+        path: "favorite",
+        element: <FavoriteSongs />,
       },
     ],
   },

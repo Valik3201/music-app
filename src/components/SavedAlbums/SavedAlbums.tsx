@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { fetchUserSavedAlbums } from "../../redux/userData/userDataOperations";
+import { getUserSavedAlbums } from "../../redux/userData/userDataOperations";
 
 const SavedAlbums: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -10,7 +10,7 @@ const SavedAlbums: React.FC = () => {
 
   useEffect(() => {
     if (currentToken && currentToken.access_token) {
-      dispatch(fetchUserSavedAlbums(currentToken.access_token));
+      dispatch(getUserSavedAlbums(currentToken.access_token));
     }
   }, [currentToken]);
 
