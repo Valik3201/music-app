@@ -32,7 +32,6 @@ export const getPlaylist = async (accessToken: string, playlist_id: string) => {
       },
     });
 
-    console.debug(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetch playlist data:", error);
@@ -55,7 +54,6 @@ export const createPlaylist = async (
       }
     );
 
-    console.debug(response.data);
     return response.data;
   } catch (error) {
     console.error("Error creating playlist:", error);
