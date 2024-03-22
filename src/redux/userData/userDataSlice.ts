@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  fetchUserSavedAlbums,
+  getUserSavedAlbums,
   getUserPlaylists,
   getUserTracks,
 } from "./userDataOperations";
@@ -22,19 +22,19 @@ const initialState = {
 } satisfies UserDataState as UserDataState;
 
 const userDataSlice = createSlice({
-  name: "albums",
+  name: "userData",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserSavedAlbums.pending, (state) => {
+      .addCase(getUserSavedAlbums.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchUserSavedAlbums.fulfilled, (state, action) => {
+      .addCase(getUserSavedAlbums.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.albums = action.payload;
       })
-      .addCase(fetchUserSavedAlbums.rejected, (state, action) => {
+      .addCase(getUserSavedAlbums.rejected, (state, action) => {
         state.status = "failed";
         state.error =
           action.error.message ?? "Failed to fetch user's saved albums";

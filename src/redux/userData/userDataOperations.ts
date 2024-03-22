@@ -3,8 +3,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://api.spotify.com/v1";
 
-export const fetchUserSavedAlbums = createAsyncThunk(
-  "albums/fetchUserSavedAlbums",
+export const getUserSavedAlbums = createAsyncThunk(
+  "albums/getUserSavedAlbums",
   async (accessToken: string) => {
     try {
       const response = await axios.get("/me/albums", {
@@ -39,9 +39,12 @@ export const getUserPlaylists = createAsyncThunk(
 
 export const getUserTracks = createAsyncThunk(
   "tracks/getUserTracks",
-  async ({ accessToken }: { accessToken: string }) => {
+  async (accessToken: string) => {
     try {
-      const response = await axios.get(`/me/tracks`, {
+      const response = await axios.get("/me/tracks", {
+        params: {
+          limit: 50,
+        },
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -49,7 +52,7 @@ export const getUserTracks = createAsyncThunk(
 
       return response.data.items;
     } catch (error) {
-      console.error("Error fetching user playlists:", error);
+      console.error("Error fetching user saved albums:", error);
     }
   }
 );
