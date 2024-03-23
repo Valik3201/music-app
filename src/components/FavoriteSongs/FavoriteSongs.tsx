@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { getUserTracks } from "../../redux/userData/userDataOperations";
 import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
@@ -28,6 +28,27 @@ const FavoriteSongs = () => {
       dispatch(getUserTracks(currentToken.access_token));
     }
   }, [currentToken]);
+
+  const totalDuration = useMemo(() => {
+    if (!favoriteSongs) return 0;
+
+    return favoriteSongs.reduce((total, item) => {
+      return total + item.track.duration_ms;
+    }, 0);
+  }, [favoriteSongs]);
+
+  const totalDurationInMinutes = Math.floor(totalDuration / 60000);
+
+  const hours = Math.floor(totalDurationInMinutes / 60);
+  const minutes = totalDurationInMinutes % 60;
+
+  let totalTimeString = "";
+
+  if (hours > 0) {
+    totalTimeString += `${hours} hour${hours > 1 ? "s" : ""} `;
+  }
+
+  totalTimeString += `${minutes} minute${minutes > 1 ? "s" : ""}`;
 
   return (
     <>
@@ -91,7 +112,9 @@ const FavoriteSongs = () => {
             ))}
           </Table>
 
-          <SongCount>{favoriteSongs.length} songs</SongCount>
+          <SongCount>
+            {favoriteSongs.length} songs, {totalTimeString}
+          </SongCount>
         </Playlist>
       )}
     </>

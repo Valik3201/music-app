@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { getPlaylist } from "../../api/spotify";
 import { useAppSelector } from "../../redux/hooks";
@@ -49,6 +49,27 @@ const PlaylistItem = () => {
 
     fetchPlaylist();
   }, [playlistID]);
+
+  const totalDuration = useMemo(() => {
+    if (!playlist) return 0;
+
+    return playlist.tracks.items.reduce((total, item) => {
+      return total + item.track.duration_ms;
+    }, 0);
+  }, [playlist]);
+
+  const totalDurationInMinutes = Math.floor(totalDuration / 60000);
+
+  const hours = Math.floor(totalDurationInMinutes / 60);
+  const minutes = totalDurationInMinutes % 60;
+
+  let totalTimeString = "";
+
+  if (hours > 0) {
+    totalTimeString += `${hours} hour${hours > 1 ? "s" : ""} `;
+  }
+
+  totalTimeString += `${minutes} minute${minutes > 1 ? "s" : ""}`;
 
   if (!playlist) {
     return <PlaylistSkeleton />;
@@ -135,7 +156,9 @@ const PlaylistItem = () => {
             ))}
           </Table>
 
-          <SongCount>{playlist.tracks.total} songs</SongCount>
+          <SongCount>
+            {playlist.tracks.total} songs, {totalTimeString}
+          </SongCount>
         </Playlist>
       )}
     </>
