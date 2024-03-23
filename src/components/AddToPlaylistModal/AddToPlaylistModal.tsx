@@ -28,7 +28,7 @@ const AddToPlaylistModal: React.FC<{ uri: string }> = ({ uri }) => {
     <>
       <button
         onClick={toggleModal}
-        className="p-2 rounded-lg hover:bg-shark transition duration-200 ease-in-out"
+        className="p-1 rounded-lg odd:hover:bg-silver-900/20 transition duration-200 ease-in-out"
       >
         <PlusIcon />
       </button>
@@ -48,7 +48,7 @@ const AddToPlaylistModal: React.FC<{ uri: string }> = ({ uri }) => {
                 <button
                   onClick={toggleModal}
                   type="button"
-                  className="text-white p-2 rounded-lg hover:bg-black/50 transition duration-200 ease-in-out"
+                  className="text-white p-1 rounded-lg hover:bg-black/50 transition duration-200 ease-in-out"
                   data-modal-hide="default-modal"
                 >
                   <div className="rotate-45">

@@ -34,7 +34,7 @@ const Table: React.FC<{ children: React.ReactNode }> = ({ children }) => (
         <th className="w-1/12 py-2 text-center ">Duration</th>
       </tr>
     </thead>
-    <tbody className="divide-y divide-silver-900">{children}</tbody>
+    <tbody>{children}</tbody>
   </table>
 );
 

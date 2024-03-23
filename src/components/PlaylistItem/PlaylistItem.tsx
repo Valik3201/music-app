@@ -89,8 +89,8 @@ const PlaylistItem = () => {
 
           <Table>
             {playlist.tracks.items.map((item) => (
-              <tr key={item.track.id}>
-                <td className="flex gap-4 items-center py-2">
+              <tr key={item.track.id} className="odd:bg-shark/50 even:bg-black">
+                <td className="flex gap-4 items-center p-2">
                   <img
                     src={item.track.album.images[0].url}
                     alt={item.track.name}
