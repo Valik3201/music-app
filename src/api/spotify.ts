@@ -59,3 +59,25 @@ export const createPlaylist = async (
     console.error("Error creating playlist:", error);
   }
 };
+
+export const addItemsToPlaylist = async (
+  accessToken: string,
+  playlist_id: string,
+  itemsData: { uris: string[]; position?: string }
+) => {
+  try {
+    const response = await axios.post(
+      `/playlists/${playlist_id}/tracks`,
+      itemsData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error adding items to playlist:", error);
+  }
+};

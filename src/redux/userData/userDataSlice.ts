@@ -32,7 +32,7 @@ const userDataSlice = createSlice({
       })
       .addCase(getUserSavedAlbums.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.albums = action.payload;
+        state.albums = action.payload as any[];
       })
       .addCase(getUserSavedAlbums.rejected, (state, action) => {
         state.status = "failed";
@@ -46,12 +46,12 @@ const userDataSlice = createSlice({
       })
       .addCase(getUserPlaylists.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.playlists = action.payload;
+        state.playlists = action.payload as any[];
       })
       .addCase(getUserPlaylists.rejected, (state, action) => {
         state.status = "failed";
         state.error =
-          action.error.message ?? "Failed to fetch user's playlists";
+          action.error.message ?? "Failed to fetch current user's playlists";
       });
 
     builder
@@ -60,7 +60,7 @@ const userDataSlice = createSlice({
       })
       .addCase(getUserTracks.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.tracks = action.payload;
+        state.tracks = action.payload as any[];
       })
       .addCase(getUserTracks.rejected, (state, action) => {
         state.status = "failed";

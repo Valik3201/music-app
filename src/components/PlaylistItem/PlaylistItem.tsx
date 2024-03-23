@@ -6,6 +6,8 @@ import * as Types from "./types";
 import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 
+import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
+
 const {
   Playlist,
   PlaylistHeader,
@@ -54,7 +56,6 @@ const PlaylistItem = () => {
       {playlist && (
         <Playlist>
           <PlaylistHeader>
-            {" "}
             {playlist.images && playlist.images[0]?.url ? (
               <div className="bg-shark w-64 h-64 rounded-lg mb-2 mr-4">
                 <img
@@ -123,6 +124,9 @@ const PlaylistItem = () => {
                   {(
                     "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
                   ).slice(-2)}
+                </td>
+                <td className="text-silver-400 text-center py-2">
+                  <AddToPlaylistModal uri={item.track.uri} />
                 </td>
               </tr>
             ))}

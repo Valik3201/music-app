@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import { redirectUri } from "../../constants/constants";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { refreshToken } from "../../redux/auth/authOperations";
+import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 import { logout } from "../../redux/auth/authSlice";
 import { Outlet, NavLink } from "react-router-dom";
 import * as Icons from "../ui/icons/flowbite";
-
-import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 
 const Root: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -22,15 +21,10 @@ const Root: React.FC = () => {
   };
 
   useEffect(() => {
-    if (currentToken && currentToken.access_token && user && user.id) {
-      dispatch(
-        getUserPlaylists({
-          accessToken: currentToken.access_token,
-          userID: user.id,
-        })
-      );
+    if (currentToken && currentToken.access_token) {
+      dispatch(getUserPlaylists(currentToken.access_token));
     }
-  }, [currentToken, user]);
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -220,6 +214,7 @@ const Root: React.FC = () => {
                     )}
                   </NavLink>
                 </li>
+
                 {Object.values(userPlaylists)
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((playlist: any) => (
