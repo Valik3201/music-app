@@ -15,24 +15,7 @@ export const getUserSavedAlbums = createAsyncThunk(
 
       return response.data.items;
     } catch (error) {
-      console.error("Error fetching user saved albums:", error);
-    }
-  }
-);
-
-export const getUserPlaylists = createAsyncThunk(
-  "playlists/getUserPlaylists",
-  async ({ accessToken, userID }: { accessToken: string; userID: string }) => {
-    try {
-      const response = await axios.get(`/users/${userID}/playlists`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      return response.data.items;
-    } catch (error) {
-      console.error("Error fetching user playlists:", error);
+      console.error("Error fetching user's saved albums:", error);
     }
   }
 );
@@ -42,9 +25,6 @@ export const getUserTracks = createAsyncThunk(
   async (accessToken: string) => {
     try {
       const response = await axios.get("/me/tracks", {
-        params: {
-          limit: 50,
-        },
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -52,7 +32,24 @@ export const getUserTracks = createAsyncThunk(
 
       return response.data.items;
     } catch (error) {
-      console.error("Error fetching user saved albums:", error);
+      console.error("Error fetching user's saved albums:", error);
+    }
+  }
+);
+
+export const getUserPlaylists = createAsyncThunk(
+  "playlists/getUserPlaylists",
+  async (accessToken: string) => {
+    try {
+      const response = await axios.get("/me/playlists", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return response.data.items;
+    } catch (error) {
+      console.error("Error fetching user's playlists:", error);
     }
   }
 );
