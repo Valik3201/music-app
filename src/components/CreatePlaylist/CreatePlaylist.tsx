@@ -51,12 +51,10 @@ const CreatePlaylist: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-3xl font-black pb-4">New Playlist</h2>
-
       <form>
-        <div className="flex gap-4 flex-col lg:flex-row">
-          <div className="bg-shark flex-shrink-0 rounded-lg mb-2 mr-4">
-            <PlaylistCover size={"w-72 h-72"} />
+        <div className="flex gap-4 flex-col lg:flex-row mt-4">
+          <div>
+            <PlaylistCover />
           </div>
 
           <div className="flex flex-col gap-4 w-full">
@@ -66,7 +64,7 @@ const CreatePlaylist: React.FC = () => {
                 name="name"
                 value={playlistData.name}
                 onChange={handleInputChange}
-                className="block py-2.5 px-0 w-full text-4xl font-extrabold text-white bg-green/0 border-0 border-b-2 border-green appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block py-2.5 px-0 w-full text-4xl font-extrabold text-white bg-green/0 border-0 border-b-2 border-green appearance-none focus:outline-none focus:ring-0 focus:border-green peer"
                 placeholder=" "
                 required
               />
@@ -85,7 +83,7 @@ const CreatePlaylist: React.FC = () => {
               name="description"
               value={playlistData.description}
               onChange={handleInputChange}
-              rows={4}
+              rows={2}
               className="block p-2.5 w-full text-sm text-silver-400 bg-shark rounded-lg border border-silver-900 focus:green focus:border-green focus:ring-green focus:ring-2 resize-none"
               placeholder="Description"
             ></textarea>
