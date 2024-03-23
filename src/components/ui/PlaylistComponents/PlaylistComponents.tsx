@@ -9,7 +9,9 @@ const PlaylistInfo: React.FC<{ children: React.ReactNode }> = ({
 }) => <div className="flex flex-col gap-4">{children}</div>;
 
 const Type: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="font-extrabold text-md text-silver-400 uppercase">{children}</p>
+  <div className="font-extrabold text-md text-silver-400 uppercase">
+    {children}
+  </div>
 );
 
 const Title: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -17,11 +19,11 @@ const Title: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 const Artist: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-green font-medium text-2xl">{children}</p>
+  <div className="text-green font-medium text-2xl">{children}</div>
 );
 
 const Description: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-silver-400 w-96">{children}</p>
+  <div className="text-silver-400 w-96">{children}</div>
 );
 
 const Table: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -34,7 +36,7 @@ const Table: React.FC<{ children: React.ReactNode }> = ({ children }) => (
         <th className="w-1/12 py-2 text-center ">Duration</th>
       </tr>
     </thead>
-    <tbody className="divide-y divide-silver-900">{children}</tbody>
+    <tbody>{children}</tbody>
   </table>
 );
 

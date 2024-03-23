@@ -44,12 +44,12 @@ const Root: React.FC = () => {
 
   return (
     <>
-      <header className="bg-shark border-b border-shark px-4 py-2.5 fixed left-0 right-0 top-0 z-50">
+      <header className="bg-black backdrop-filter backdrop-blur-lg bg-opacity-30 firefox:bg-opacity-90 border-b border-silver-900 px-4 py-2.5 fixed left-0 right-0 top-0 z-50">
         <div className="flex flex-wrap justify-between items-center">
           <div className="flex justify-start items-center">
             <button
               onClick={toggleSidebar}
-              className="p-2 mr-2 text-silver-699 rounded-lg cursor-pointer md:hidden hover:bg-black/80 focus:bg-black/90 focus:ring-2 focus:ring-green"
+              className="p-2 mr-2 text-silver-699 rounded-lg cursor-pointer md:hidden hover:bg-shark/50 focus:bg-shark/60 focus:ring-2 focus:ring-green"
             >
               <Icons.BarIcon />
               <span className="sr-only">Toggle sidebar</span>
@@ -80,7 +80,7 @@ const Root: React.FC = () => {
 
             {isOpen && (
               <div
-                className="absolute z-50 my-4 min-w-56 text-base list-none bg-shark divide-y divide-silver-500 shadow rounded-xl top-8 right-0"
+                className="absolute z-50 my-4 min-w-56 text-base list-none bg-black divide-y divide-silver-900 shadow rounded-xl top-8 right-0"
                 id="dropdown"
               >
                 <div className="py-3 px-4">
@@ -113,18 +113,18 @@ const Root: React.FC = () => {
       </header>
 
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-black pt-14 transition-transform ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-black pt-12 transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >
-        <div className="overflow-y-auto py-5 px-3 h-full bg-shark">
+        <div className="overflow-y-auto py-5 px-3 h-full bg-black">
           <div className="flex flex-col gap-4">
             <nav>
               <ul className="space-y-2">
                 <li>
                   <NavLink
                     to=""
-                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-shark/50 transition duration-200 ease-in-out"
                   >
                     {({ isActive }) => (
                       <>
@@ -142,7 +142,7 @@ const Root: React.FC = () => {
                 <li>
                   <NavLink
                     to="/search"
-                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-shark/50 transition duration-200 ease-in-out"
                   >
                     {({ isActive }) => (
                       <>
@@ -160,7 +160,7 @@ const Root: React.FC = () => {
                 <li>
                   <NavLink
                     to="/create-playlist"
-                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                    className="flex items-center gap-2 p-2 text-base font-bold rounded-lg hover:bg-shark/50 transition duration-200 ease-in-out"
                   >
                     {({ isActive }) => (
                       <>
@@ -178,11 +178,11 @@ const Root: React.FC = () => {
             </nav>
 
             {userPlaylists && (
-              <ul className="pt-5 space-y-2 border-t border-silver-400">
+              <ul className="pt-5 space-y-2 border-t border-silver-900">
                 <li>
                   <NavLink
                     to="/all-playlists"
-                    className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                    className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-shark/50 transition duration-200 ease-in-out"
                   >
                     {({ isActive }) => (
                       <>
@@ -200,7 +200,7 @@ const Root: React.FC = () => {
                 <li>
                   <NavLink
                     to="/favorite"
-                    className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                    className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-shark/50 transition duration-200 ease-in-out"
                   >
                     {({ isActive }) => (
                       <>
@@ -221,7 +221,7 @@ const Root: React.FC = () => {
                     <li key={playlist.id}>
                       <NavLink
                         to={`/playlist/${playlist.id}`}
-                        className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-black/40 transition duration-200 ease-in-out"
+                        className="flex items-center gap-2 p-2 text-base rounded-lg hover:bg-shark/50 transition duration-200 ease-in-out"
                       >
                         {({ isActive }) => (
                           <>
@@ -241,7 +241,7 @@ const Root: React.FC = () => {
           </div>
         </div>
 
-        <div className="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-shark text-silver-400 text-xs font-medium z-20">
+        <div className="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-black text-silver-400 text-xs font-medium z-20">
           Copyright {new Date().getFullYear()}
         </div>
       </aside>

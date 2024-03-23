@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { getPlaylist } from "../../api/spotify";
 import { useAppSelector } from "../../redux/hooks";
@@ -7,6 +7,7 @@ import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
+import PlaylistSkeleton from "../ui/PlaylistSkeleton/PlaylistSkeleton";
 
 const {
   Playlist,
@@ -27,6 +28,8 @@ const PlaylistItem = () => {
 
   useEffect(() => {
     const fetchPlaylist = async () => {
+      setPlaylist(null);
+
       try {
         if (!playlistID) {
           throw new Error("Playlist ID is not provided");
@@ -47,8 +50,29 @@ const PlaylistItem = () => {
     fetchPlaylist();
   }, [playlistID]);
 
+  const totalDuration = useMemo(() => {
+    if (!playlist) return 0;
+
+    return playlist.tracks.items.reduce((total, item) => {
+      return total + item.track.duration_ms;
+    }, 0);
+  }, [playlist]);
+
+  const totalDurationInMinutes = Math.floor(totalDuration / 60000);
+
+  const hours = Math.floor(totalDurationInMinutes / 60);
+  const minutes = totalDurationInMinutes % 60;
+
+  let totalTimeString = "";
+
+  if (hours > 0) {
+    totalTimeString += `${hours} hour${hours > 1 ? "s" : ""} `;
+  }
+
+  totalTimeString += `${minutes} minute${minutes > 1 ? "s" : ""}`;
+
   if (!playlist) {
-    return <div>Loading...</div>;
+    return <PlaylistSkeleton />;
   }
 
   return (
@@ -86,8 +110,8 @@ const PlaylistItem = () => {
 
           <Table>
             {playlist.tracks.items.map((item) => (
-              <tr key={item.track.id}>
-                <td className="flex gap-4 items-center py-2">
+              <tr key={item.track.id} className="odd:bg-shark/50 even:bg-black">
+                <td className="flex gap-4 items-center p-2">
                   <img
                     src={item.track.album.images[0].url}
                     alt={item.track.name}
@@ -132,7 +156,9 @@ const PlaylistItem = () => {
             ))}
           </Table>
 
-          <SongCount>{playlist.tracks.total} songs</SongCount>
+          <SongCount>
+            {playlist.tracks.total} songs, {totalTimeString}
+          </SongCount>
         </Playlist>
       )}
     </>
