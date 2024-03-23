@@ -7,6 +7,7 @@ import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
+import PlaylistSkeleton from "../ui/PlaylistSkeleton/PlaylistSkeleton";
 
 const {
   Playlist,
@@ -27,6 +28,8 @@ const PlaylistItem = () => {
 
   useEffect(() => {
     const fetchPlaylist = async () => {
+      setPlaylist(null);
+
       try {
         if (!playlistID) {
           throw new Error("Playlist ID is not provided");
@@ -48,7 +51,7 @@ const PlaylistItem = () => {
   }, [playlistID]);
 
   if (!playlist) {
-    return <div>Loading...</div>;
+    return <PlaylistSkeleton />;
   }
 
   return (
