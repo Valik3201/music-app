@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { searchSpotify } from "../../api/spotify";
 import { SearchResult, Artist, Album, Track, Playlist } from "./types";
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { Carousel, CarouselItem } from "../ui/Carousel/Carousel";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
+import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 
 const SearchForm: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -25,6 +26,13 @@ const SearchForm: React.FC = () => {
       if (!currentToken) {
         return;
       }
+
+      setSearchResults({
+        artists: { total: 0, items: [] },
+        albums: { total: 0, items: [] },
+        tracks: { total: 0, items: [] },
+        playlists: { total: 0, items: [] },
+      });
 
       const data = await searchSpotify(currentToken.access_token, query);
 
@@ -92,7 +100,7 @@ const SearchForm: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Enter your search query"
             required
-            className="block w-full p-4 ps-6 pe-24 text-sm border border-silver-400 rounded-full bg-black focus:outline-none focus:ring-2 focus:ring-green focus:border-green search-cancel:appearance-none"
+            className="block w-full p-4 ps-6 pe-24 text-sm border border-silver-900 rounded-full bg-black focus:outline-none focus:ring-1 focus:ring-green focus:border-green search-cancel:appearance-none"
           />
           <button
             type="submit"
@@ -200,42 +208,53 @@ const SearchForm: React.FC = () => {
                     key={result.id}
                     className="p-2 bg-shark/75 rounded-xl hover:bg-shark transition duration-200 ease-in-out"
                   >
-                    <a
-                      href={result.external_urls.spotify}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <div className="flex gap-4">
-                        {result.album.images && result.album.images[0] && (
-                          <img
-                            src={result.album.images[0]?.url}
-                            alt={result.name}
-                            className="w-12 h-12 object-cover rounded-md"
-                          />
-                        )}
+                    <div className="flex gap-2">
+                      {result.album.images && result.album.images[0] && (
+                        <img
+                          src={result.album.images[0]?.url}
+                          alt={result.name}
+                          className="w-12 h-12 object-cover rounded-md"
+                        />
+                      )}
 
-                        <div className="flex w-full justify-between items-center">
-                          <div>
-                            <p className="font-medium truncate w-80 md:w-52">
+                      <div className="flex w-full justify-between items-center">
+                        <div>
+                          <p className="font-medium truncate w-96 md:w-48">
+                            <a
+                              href={result.external_urls.spotify}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               {result.name}
-                            </p>
-                            <p className="text-xs text-silver-400 truncate w-96 md:w-60">
-                              {result.album.artists
-                                .map((item) => item.name)
-                                .join(", ")}
-                            </p>
-                          </div>
+                            </a>
+                          </p>
 
-                          <div className="pr-2">
-                            {Math.floor(result.duration_ms / 60000)}:
-                            {(
-                              "0" +
-                              Math.floor((result.duration_ms % 60000) / 1000)
-                            ).slice(-2)}
-                          </div>
+                          <p className="text-xs text-silver-400 truncate w-96 md:w-52">
+                            {result.album.artists.map((artist, index) => [
+                              <a
+                                key={artist.id}
+                                href={artist.external_urls.spotify}
+                                className="hover:underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {artist.name}
+                              </a>,
+                              index !== result.album.artists.length - 1 && ", ",
+                            ])}
+                          </p>
+                        </div>
+
+                        <div className="pr-2 flex items-center gap-1">
+                          <AddToPlaylistModal uri={result.uri} />
+                          {Math.floor(result.duration_ms / 60000)}:
+                          {(
+                            "0" +
+                            Math.floor((result.duration_ms % 60000) / 1000)
+                          ).slice(-2)}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -248,11 +267,7 @@ const SearchForm: React.FC = () => {
               <Carousel>
                 {searchResults.playlists.items.map((result: Playlist) => (
                   <CarouselItem key={result.id}>
-                    <a
-                      href={result.external_urls.spotify}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link to={`/playlist/${result.id}`}>
                       <div className="bg-shark aspect-square rounded-lg mb-2 hover:opacity-70 transition duration-200 ease-in-out">
                         {result.images[0]?.url ? (
                           <img
@@ -269,7 +284,7 @@ const SearchForm: React.FC = () => {
                       <p className="text-silver-400">
                         {result.owner.display_name}
                       </p>
-                    </a>
+                    </Link>
                   </CarouselItem>
                 ))}
               </Carousel>

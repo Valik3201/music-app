@@ -3,7 +3,13 @@ import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
 const HeroSection: React.FC = () => {
   return (
     <>
-      <div className="bg-gradient-to-br from-green to-transparent to-40% w-full h-96 absolute top-0 left-0 z-0"></div>
+      <div
+        className="bg-green w-full h-96 absolute top-0 left-0 z-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(98.85deg, rgba(18, 18, 18, 0.3) 0%, rgb(18, 18, 18) 100%), linear-gradient(rgba(18, 18, 18, 0) 0%, rgb(18, 18, 18) 100%)",
+        }}
+      ></div>
 
       <section className="z-10 relative h-screen flex justify-center items-center">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">

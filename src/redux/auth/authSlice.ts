@@ -11,6 +11,7 @@ export interface UserData {
   }[];
   email: string;
   external_urls: { spotify: string };
+  product: string;
 }
 
 export interface Token {

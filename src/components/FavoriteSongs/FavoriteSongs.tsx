@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { getUserTracks } from "../../redux/userData/userDataOperations";
 import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
+import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 
 const {
   Playlist,
@@ -107,6 +108,9 @@ const FavoriteSongs = () => {
                   {(
                     "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
                   ).slice(-2)}
+                </td>
+                <td className="text-silver-400 text-center py-2">
+                  <AddToPlaylistModal uri={item.track.uri} />
                 </td>
               </tr>
             ))}
