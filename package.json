@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.1",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "@types/react-redux": "^7.1.33",
+    "alpinejs": "^3.13.7",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "g": "^2.0.1",
@@ -25,6 +26,7 @@
     "spotify-web-api-js": "^1.5.2"
   },
   "devDependencies": {
+    "@types/alpinejs": "^3.13.9",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",

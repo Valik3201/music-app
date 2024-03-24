@@ -30,6 +30,18 @@ export default {
         3: "calc((100% - 4 * 1rem) / 3)",
         2: "calc((100% - 4 * 1rem) / 2)",
       },
+      backgroundImage: {
+        hero: "linear-gradient(98.85deg, rgba(18, 18, 18, 0.25) 0%, rgb(18, 18, 18) 100%), linear-gradient(rgba(18, 18, 18, 0) 0%, rgb(18, 18, 18) 100%)",
+      },
+      animation: {
+        "infinite-scroll": "infinite-scroll 50s linear infinite",
+      },
+      keyframes: {
+        "infinite-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+      },
     },
   },
   plugins: [

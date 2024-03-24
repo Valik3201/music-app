@@ -6,6 +6,7 @@ import { getUserPlaylists } from "../../redux/userData/userDataOperations";
 import { logout } from "../../redux/auth/authSlice";
 import { Outlet, NavLink } from "react-router-dom";
 import * as Icons from "../ui/icons/flowbite";
+import SessionTimer from "../SessionTimer/SessionTimer";
 
 const Root: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -65,9 +66,7 @@ const Root: React.FC = () => {
           </div>
 
           <div className="flex items-center lg:order-2 relative">
-            <div className="text-blue text-xs font-medium ms-2 px-2.5 py-0.5 rounded-full border border-blue">
-              {user?.product}
-            </div>
+            <SessionTimer />
 
             <button
               type="button"
@@ -91,12 +90,16 @@ const Root: React.FC = () => {
                 id="dropdown"
               >
                 <div className="py-3 px-4">
-                  <span className="block text-sm font-semibold">
+                  <div className="flex gap-2 items-center text-xl font-semibold">
                     {user?.display_name ?? "No name"}
-                  </span>
-                  <span className="block text-sm text-silver-500 truncate">
+
+                    <span className="text-blue text-xs font-medium px-2.5 py-0.5 rounded-full border border-blue">
+                      {user?.product}
+                    </span>
+                  </div>
+                  <div className="block text-sm text-silver-500 truncate">
                     {user?.email ?? "No data"}
-                  </span>
+                  </div>
                 </div>
 
                 <div>
