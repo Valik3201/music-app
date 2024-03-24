@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { getUserSavedAlbums } from "../../redux/userData/userDataOperations";
+import { Link } from "react-router-dom";
 
 const SavedAlbums: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -23,11 +24,7 @@ const SavedAlbums: React.FC = () => {
             {savedAlbums &&
               savedAlbums.map((album: any) => (
                 <li key={album.album.id}>
-                  <a
-                    href={album.album.external_urls.spotify}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <Link to={`album/${album.album.id}`}>
                     <img
                       src={album.album.images[0].url}
                       alt={album.album.name}
@@ -39,7 +36,7 @@ const SavedAlbums: React.FC = () => {
                         .map((artist: any) => artist.name)
                         .join(", ")}
                     </p>
-                  </a>
+                  </Link>
                 </li>
               ))}
           </ul>
