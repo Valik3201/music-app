@@ -30,7 +30,16 @@ const SavedAlbums: React.FC = () => {
                       alt={album.album.name}
                       className="h-auto max-w-full rounded-lg mb-2 hover:opacity-80 transition duration-200 ease-in-out"
                     />
-                    <p className="font-bold">{album.album.name}</p>
+                    <p className="font-bold">
+                      {album.album.name}
+                      {album.album.album_type === "single" && (
+                        <span>
+                          {" - "}
+                          {album.album.album_type.charAt(0).toUpperCase() +
+                            album.album.album_type.slice(1)}
+                        </span>
+                      )}
+                    </p>
                     <p className="text-silver-400">
                       {album.album.artists
                         .map((artist: any) => artist.name)
