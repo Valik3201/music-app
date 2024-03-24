@@ -10,23 +10,11 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-const images = [
-  "/assets/album-covers/1000x1000bb-1.webp",
-  "/assets/album-covers/1000x1000bb-2.webp",
-  "/assets/album-covers/1000x1000bb-3.webp",
-  "/assets/album-covers/1000x1000bb-4.webp",
-  "/assets/album-covers/1000x1000bb-5.webp",
-  "/assets/album-covers/1000x1000bb-6.webp",
-  "/assets/album-covers/1000x1000bb-7.webp",
-  "/assets/album-covers/1000x1000bb-8.webp",
-  "/assets/album-covers/1000x1000bb-9.webp",
-  "/assets/album-covers/1000x1000bb-10.webp",
-  "/assets/album-covers/1000x1000bb-11.webp",
-  "/assets/album-covers/1000x1000bb-12.webp",
-  "/assets/album-covers/1000x1000bb-13.webp",
-  "/assets/album-covers/1000x1000bb-14.webp",
-  "/assets/album-covers/1000x1000bb-15.webp",
-];
+const images: string[] = [];
+
+for (let i = 1; i <= 15; i++) {
+  images.push(`/album-covers/1000x1000bb-${i}.webp`);
+}
 
 const HeroSection: React.FC = () => {
   return (
