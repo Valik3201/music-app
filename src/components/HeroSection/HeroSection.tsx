@@ -13,7 +13,7 @@ Alpine.start();
 const images: string[] = [];
 
 for (let i = 1; i <= 15; i++) {
-  images.push(`/public/album-covers/1000x1000bb-${i}.webp`);
+  images.push(`/album-covers/1000x1000bb-${i}.webp`);
 }
 
 const HeroSection: React.FC = () => {
