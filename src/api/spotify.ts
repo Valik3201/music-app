@@ -46,8 +46,6 @@ export const getAlbum = async (accessToken: string, album_id: string) => {
       },
     });
 
-    console.debug(response.data);
-
     return response.data;
   } catch (error) {
     console.error("Error fetch album data:", error);
