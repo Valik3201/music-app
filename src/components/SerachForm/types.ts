@@ -40,6 +40,7 @@ export interface Track {
   images: { url: string }[];
   duration_ms: number;
   external_urls: { spotify: string };
+  uri: string;
 }
 
 export interface Playlist {

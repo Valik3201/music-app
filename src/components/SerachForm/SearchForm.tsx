@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { searchSpotify } from "../../api/spotify";
 import { SearchResult, Artist, Album, Track, Playlist } from "./types";
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { Carousel, CarouselItem } from "../ui/Carousel/Carousel";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
+import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 
 const SearchForm: React.FC = () => {
   const currentToken = useAppSelector((state) => state.auth.currentToken);
@@ -25,6 +26,13 @@ const SearchForm: React.FC = () => {
       if (!currentToken) {
         return;
       }
+
+      setSearchResults({
+        artists: { total: 0, items: [] },
+        albums: { total: 0, items: [] },
+        tracks: { total: 0, items: [] },
+        playlists: { total: 0, items: [] },
+      });
 
       const data = await searchSpotify(currentToken.access_token, query);
 
@@ -216,17 +224,18 @@ const SearchForm: React.FC = () => {
 
                         <div className="flex w-full justify-between items-center">
                           <div>
-                            <p className="font-medium truncate w-80 md:w-52">
+                            <p className="font-medium truncate w-96 md:w-48">
                               {result.name}
                             </p>
-                            <p className="text-xs text-silver-400 truncate w-96 md:w-60">
+                            <p className="text-xs text-silver-400 truncate w-96 md:w-52">
                               {result.album.artists
                                 .map((item) => item.name)
                                 .join(", ")}
                             </p>
                           </div>
 
-                          <div className="pr-2">
+                          <div className="pr-2 flex items-center gap-1">
+                            <AddToPlaylistModal uri={result.uri} />
                             {Math.floor(result.duration_ms / 60000)}:
                             {(
                               "0" +
@@ -248,11 +257,7 @@ const SearchForm: React.FC = () => {
               <Carousel>
                 {searchResults.playlists.items.map((result: Playlist) => (
                   <CarouselItem key={result.id}>
-                    <a
-                      href={result.external_urls.spotify}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link to={`/playlist/${result.id}`}>
                       <div className="bg-shark aspect-square rounded-lg mb-2 hover:opacity-70 transition duration-200 ease-in-out">
                         {result.images[0]?.url ? (
                           <img
@@ -269,7 +274,7 @@ const SearchForm: React.FC = () => {
                       <p className="text-silver-400">
                         {result.owner.display_name}
                       </p>
-                    </a>
+                    </Link>
                   </CarouselItem>
                 ))}
               </Carousel>
