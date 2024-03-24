@@ -41,7 +41,7 @@ const Table: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 const SongCount: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="font-bold text-silver-400 text-sm py-4">{children}</p>
+  <div className="font-bold text-silver-400 text-sm py-4">{children}</div>
 );
 
 const Playlist: React.FC<{ children: React.ReactNode }> = ({ children }) => {

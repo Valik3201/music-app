@@ -5,7 +5,7 @@ import { useAppSelector } from "../../redux/hooks";
 import * as Types from "./types";
 import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
-
+import { Link } from "react-router-dom";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 import PlaylistSkeleton from "../ui/PlaylistSkeleton/PlaylistSkeleton";
 
@@ -85,7 +85,7 @@ const PlaylistItem = () => {
                 <img
                   src={playlist.images[0].url}
                   alt={playlist.name}
-                  className="object-cover aspect-square rounded-lg"
+                  className="object-cover aspect-square rounded-lg h-full min-w-64"
                 />
               </div>
             ) : (
@@ -134,14 +134,17 @@ const PlaylistItem = () => {
                   ])}
                 </td>
                 <td className="text-silver-400 truncate py-2">
-                  <a
-                    href={item.track.album.external_urls.spotify}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline"
-                  >
+                  <Link to={`/album/${item.track.album.id}`}>
                     {item.track.album.name}
-                  </a>
+                    {item.track.album.album_type === "single" && (
+                      <span>
+                        {" "}
+                        -{" "}
+                        {item.track.album.album_type.charAt(0).toUpperCase() +
+                          item.track.album.album_type.slice(1)}
+                      </span>
+                    )}
+                  </Link>
                 </td>
                 <td className="text-silver-400 text-center py-2">
                   {Math.floor(item.track.duration_ms / 60000)}:

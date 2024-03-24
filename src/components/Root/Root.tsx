@@ -185,7 +185,7 @@ const Root: React.FC = () => {
             </nav>
 
             {userPlaylists && (
-              <ul className="pt-5 space-y-2 border-t border-silver-900">
+              <ul className="py-5 space-y-2 border-t border-silver-900">
                 <li>
                   <NavLink
                     to="/all-playlists"
