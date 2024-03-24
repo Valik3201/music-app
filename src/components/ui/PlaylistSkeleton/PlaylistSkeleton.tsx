@@ -30,12 +30,12 @@ const PlaylistSkeleton: React.FC = () => {
             <Artist>
               <div className="h-8 bg-shark rounded-lg w-64"></div>
             </Artist>
-            <Description>
+            <div>
               <div className="h-2.5 bg-shark rounded-md w-80 mb-2"></div>
               <div className="h-2.5 bg-shark rounded-md w-96 mb-2"></div>
               <div className="h-2.5 bg-shark rounded-md w-72 mb-2"></div>
               <div className="h-2.5 bg-shark rounded-md w-48"></div>
-            </Description>
+            </div>
           </PlaylistInfo>
         </PlaylistHeader>
       </Playlist>
