@@ -38,6 +38,22 @@ export const getPlaylist = async (accessToken: string, playlist_id: string) => {
   }
 };
 
+export const getAlbum = async (accessToken: string, album_id: string) => {
+  try {
+    const response = await axios.get(`/albums/${album_id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    console.debug(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetch album data:", error);
+  }
+};
+
 export const createPlaylist = async (
   accessToken: string,
   user_id: string,
