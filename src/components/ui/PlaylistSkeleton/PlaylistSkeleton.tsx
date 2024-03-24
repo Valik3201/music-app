@@ -1,15 +1,8 @@
 import PlaylistComponents from "../PlaylistComponents/PlaylistComponents";
 import PlaylistCover from "../PlaylistCover/PlaylistCover";
 
-const {
-  Playlist,
-  PlaylistHeader,
-  PlaylistInfo,
-  Type,
-  Title,
-  Artist,
-  Description,
-} = PlaylistComponents;
+const { Playlist, PlaylistHeader, PlaylistInfo, Type, Title, Artist } =
+  PlaylistComponents;
 
 const PlaylistSkeleton: React.FC = () => {
   return (
