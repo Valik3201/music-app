@@ -58,13 +58,20 @@ const Root: React.FC = () => {
             <div className="flex items-center text-xl font-black">
               <Icons.PlayIconSolid />
               Music App
+              <span className="text-green text-xs font-medium ms-2 px-2.5 py-0.5 rounded-full border border-green">
+                with Spotify Web API
+              </span>
             </div>
           </div>
 
           <div className="flex items-center lg:order-2 relative">
+            <div className="text-blue text-xs font-medium ms-2 px-2.5 py-0.5 rounded-full border border-blue">
+              {user?.product}
+            </div>
+
             <button
               type="button"
-              className="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              className="flex mx-3 text-sm bg-green rounded-full md:mr-0 focus:ring-4 focus:ring-green"
               id="user-menu-button"
               aria-expanded={isOpen}
               onClick={toggleMenu}
@@ -80,7 +87,7 @@ const Root: React.FC = () => {
 
             {isOpen && (
               <div
-                className="absolute z-50 my-4 min-w-56 text-base list-none bg-black divide-y divide-silver-900 shadow rounded-xl top-8 right-0"
+                className="absolute z-50 my-4 min-w-56 text-base list-none bg-shark divide-y divide-silver-900 shadow rounded-xl top-8 right-0"
                 id="dropdown"
               >
                 <div className="py-3 px-4">
