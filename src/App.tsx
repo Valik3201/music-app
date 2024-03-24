@@ -8,6 +8,7 @@ import Playlists from "./components/Playlists/Playlists";
 import PlaylistItem from "./components/PlaylistItem/PlaylistItem";
 import CreatePlaylist from "./components/CreatePlaylist/CreatePlaylist";
 import FavoriteSongs from "./components/FavoriteSongs/FavoriteSongs";
+import AlbumItem from "./components/AlbumItem/AlbumItem";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "favorite",
         element: <FavoriteSongs />,
+      },
+      {
+        path: "album/:albumID",
+        element: <AlbumItem />,
       },
     ],
   },

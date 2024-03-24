@@ -142,11 +142,7 @@ const SearchForm: React.FC = () => {
               <Carousel>
                 {searchResults.albums.items.map((result: Album) => (
                   <CarouselItem key={result.id}>
-                    <a
-                      href={result.external_urls.spotify}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link to={`/album/${result.id}`}>
                       {result.images && result.images[0] && (
                         <img
                           src={result.images[0]?.url}
@@ -160,7 +156,7 @@ const SearchForm: React.FC = () => {
                         <span>{result.release_date.split("-")[0]} • </span>
                         {result.artists.map((item) => item.name).join(", ")}
                       </p>
-                    </a>
+                    </Link>
                   </CarouselItem>
                 ))}
               </Carousel>

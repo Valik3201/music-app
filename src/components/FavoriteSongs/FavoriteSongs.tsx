@@ -4,6 +4,7 @@ import { getUserTracks } from "../../redux/userData/userDataOperations";
 import PlaylistComponents from "../ui/PlaylistComponents/PlaylistComponents";
 import PlaylistCover from "../ui/PlaylistCover/PlaylistCover";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
+import { Link } from "react-router-dom";
 
 const {
   Playlist,
@@ -94,14 +95,17 @@ const FavoriteSongs = () => {
                   ])}
                 </td>
                 <td className="text-silver-400 truncate py-2">
-                  <a
-                    href={item.track.album.external_urls.spotify}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline"
-                  >
+                  <Link to={`/album/${item.track.album.id}`}>
                     {item.track.album.name}
-                  </a>
+                    {item.track.album.album_type === "single" && (
+                      <span>
+                        {" "}
+                        -{" "}
+                        {item.track.album.album_type.charAt(0).toUpperCase() +
+                          item.track.album.album_type.slice(1)}
+                      </span>
+                    )}
+                  </Link>
                 </td>
                 <td className="text-silver-400 text-center py-2">
                   {Math.floor(item.track.duration_ms / 60000)}:
