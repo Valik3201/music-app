@@ -137,7 +137,7 @@ const AlbumItem = () => {
                   <p className="font-bold truncate">{item.name}</p>
 
                   {item.explicit && (
-                    <div className="w-4 h-4 bg-silver-900/50 font-bold rounded-md text-xs text-center">
+                    <div className="min-w-4 h-4 bg-silver-900/50 font-bold rounded-md text-xs text-center mr-2">
                       E
                     </div>
                   )}
