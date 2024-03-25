@@ -1,0 +1,17 @@
+export const images = [
+  "/album-covers/1000x1000bb-1.webp",
+  "/album-covers/1000x1000bb-2.webp",
+  "/album-covers/1000x1000bb-3.webp",
+  "/album-covers/1000x1000bb-4.webp",
+  "/album-covers/1000x1000bb-5.webp",
+  "/album-covers/1000x1000bb-6.webp",
+  "/album-covers/1000x1000bb-7.webp",
+  "/album-covers/1000x1000bb-8.webp",
+  "/album-covers/1000x1000bb-9.webp",
+  "/album-covers/1000x1000bb-10.webp",
+  "/album-covers/1000x1000bb-11.webp",
+  "/album-covers/1000x1000bb-12.webp",
+  "/album-covers/1000x1000bb-13.webp",
+  "/album-covers/1000x1000bb-14.webp",
+  "/album-covers/1000x1000bb-15.webp",
+];

@@ -111,15 +111,33 @@ const PlaylistItem = () => {
           <Table>
             {playlist.tracks.items.map((item) => (
               <tr key={item.track.id} className="odd:bg-shark/50 even:bg-black">
-                <td className="flex gap-4 items-center p-2">
-                  <img
-                    src={item.track.album.images[0].url}
-                    alt={item.track.name}
-                    className="h-10 w-10 rounded-md"
-                  />
-                  <p className="font-bold truncate">{item.track.name}</p>
+                <td className="relative p-2">
+                  <p className="font-bold truncate ms-12">{item.track.name}</p>
+
+                  <div className="lg:hidden truncate ms-12">
+                    {item.track.artists.map((artist, index) => [
+                      <a
+                        key={artist.id}
+                        href={artist.external_urls.spotify}
+                        className="hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {artist.name}
+                      </a>,
+                      index !== item.track.artists.length - 1 && ", ",
+                    ])}
+                  </div>
+
+                  <div
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-md bg-cover"
+                    style={{
+                      backgroundImage: `url(${item.track.album.images[0].url})`,
+                    }}
+                  ></div>
                 </td>
-                <td className="text-silver-400 truncate py-2">
+
+                <td className="hidden lg:table-cell text-silver-400 truncate py-2">
                   {item.track.artists.map((artist, index) => [
                     <a
                       key={artist.id}
@@ -133,7 +151,7 @@ const PlaylistItem = () => {
                     index !== item.track.artists.length - 1 && ", ",
                   ])}
                 </td>
-                <td className="text-silver-400 truncate py-2">
+                <td className="hidden lg:table-cell text-silver-400 truncate py-2">
                   <Link to={`/album/${item.track.album.id}`}>
                     {item.track.album.name}
                     {item.track.album.album_type === "single" && (
@@ -147,13 +165,13 @@ const PlaylistItem = () => {
                   </Link>
                 </td>
                 <td className="text-silver-400 text-center py-2">
-                  {Math.floor(item.track.duration_ms / 60000)}:
-                  {(
-                    "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
-                  ).slice(-2)}
-                </td>
-                <td className="text-silver-400 text-center py-2">
-                  <AddToPlaylistModal uri={item.track.uri} />
+                  <div className="flex gap-1.5 items-center">
+                    {Math.floor(item.track.duration_ms / 60000)}:
+                    {(
+                      "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
+                    ).slice(-2)}
+                    <AddToPlaylistModal uri={item.track.uri} />
+                  </div>
                 </td>
               </tr>
             ))}

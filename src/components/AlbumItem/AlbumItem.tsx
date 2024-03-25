@@ -101,8 +101,7 @@ const AlbumItem = () => {
                 {album.name}
                 {album.album_type === "single" && (
                   <span>
-                    {" "}
-                    -{" "}
+                    {" - "}
                     {album.album_type.charAt(0).toUpperCase() +
                       album.album_type.slice(1)}
                   </span>
@@ -132,17 +131,19 @@ const AlbumItem = () => {
           <Table>
             {album.tracks.items.map((item, index) => (
               <tr key={item.id} className="odd:bg-shark/50 even:bg-black">
-                <td className="flex gap-4 items-center py-4 ps-4">
-                  <p>{index + 1}</p>
-                  <p className="font-bold truncate">{item.name}</p>
+                <td className="py-4 ps-4">
+                  <div className="flex gap-4 items-center">
+                    <p>{index + 1}</p>
+                    <p className="font-bold truncate">{item.name}</p>
 
-                  {item.explicit && (
-                    <div className="min-w-4 h-4 bg-silver-900/50 font-bold rounded-md text-xs text-center mr-2">
-                      E
-                    </div>
-                  )}
+                    {item.explicit && (
+                      <div className="min-w-4 h-4 bg-silver-900/50 font-bold rounded-md text-xs text-center mr-2">
+                        E
+                      </div>
+                    )}
+                  </div>
                 </td>
-                <td className="text-silver-400 truncate py-2">
+                <td className="hidden lg:table-cell text-silver-400 truncate py-2">
                   {item.artists.map((artist, index) => [
                     <a
                       key={artist.id}
@@ -156,7 +157,7 @@ const AlbumItem = () => {
                     index !== item.artists.length - 1 && ", ",
                   ])}
                 </td>
-                <td className="text-silver-400 truncate py-2">
+                <td className="hidden lg:table-cell text-silver-400 truncate py-2">
                   <a
                     href={item.external_urls.spotify}
                     target="_blank"
@@ -174,14 +175,14 @@ const AlbumItem = () => {
                     )}
                   </a>
                 </td>
-                <td className="text-silver-400 text-center py-2">
-                  {Math.floor(item.duration_ms / 60000)}:
-                  {("0" + Math.floor((item.duration_ms % 60000) / 1000)).slice(
-                    -2
-                  )}
-                </td>
-                <td className="text-silver-400 text-center py-2">
-                  <AddToPlaylistModal uri={item.uri} />
+                <td className="text-silver-400 py-2">
+                  <div className="flex gap-1.5 items-center">
+                    {Math.floor(item.duration_ms / 60000)}:
+                    {(
+                      "0" + Math.floor((item.duration_ms % 60000) / 1000)
+                    ).slice(-2)}
+                    <AddToPlaylistModal uri={item.uri} />
+                  </div>
                 </td>
               </tr>
             ))}

@@ -26,7 +26,7 @@ const SessionTimer: React.FC = () => {
     .padStart(2, "0")}`;
 
   return (
-    <div className="text-xs text-silver-400 min-w-36 text-left">
+    <div className="hidden md:block text-xs text-silver-400 min-w-36 text-left">
       {remainingTime > 0 ? (
         <p>Session expires in {formattedTime}</p>
       ) : (
