@@ -1,6 +1,7 @@
 import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
 import Alpine from "alpinejs";
 import { Alpine as AlpineType } from "alpinejs";
+import { images } from "./images";
 
 declare global {
   var Alpine: AlpineType;
@@ -9,12 +10,6 @@ declare global {
 window.Alpine = Alpine;
 
 Alpine.start();
-
-const images: string[] = [];
-
-for (let i = 1; i <= 15; i++) {
-  images.push(`/album-covers/1000x1000bb-${i}.webp`);
-}
 
 const HeroSection: React.FC = () => {
   return (
