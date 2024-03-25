@@ -33,10 +33,10 @@ const Table: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <table className="table-fixed w-full text-sm mt-4">
     <thead>
       <tr className="text-left">
-        <th className="w-4/12 py-2">Song</th>
-        <th className="w-3/12 py-2">Artist</th>
-        <th className="w-3/12 py-2">Album</th>
-        <th className="w-1/12 py-2 text-center ">Duration</th>
+        <th className="w-4/5 lg:w-4/12 py-2">Song</th>
+        <th className="w-3/12 py-2 hidden lg:table-cell">Artist</th>
+        <th className="w-3/12 py-2 hidden lg:table-cell">Album</th>
+        <th className="w-1/5 lg:w-1/12 py-2">Duration</th>
       </tr>
     </thead>
     <tbody>{children}</tbody>

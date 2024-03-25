@@ -59,7 +59,7 @@ const Root: React.FC = () => {
             <div className="flex items-center text-xl font-black">
               <Icons.PlayIconSolid />
               Music App
-              <span className="text-green text-xs font-medium ms-2 px-2.5 py-0.5 rounded-full border border-green">
+              <span className="hidden md:block text-green text-xs font-medium ms-2 px-2.5 py-0.5 rounded-full border border-green">
                 with Spotify Web API
               </span>
             </div>
