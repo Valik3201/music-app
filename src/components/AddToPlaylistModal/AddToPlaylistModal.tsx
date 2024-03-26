@@ -41,7 +41,7 @@ const AddToPlaylistModal: React.FC<{ uri: string }> = ({ uri }) => {
           <div className="relative p-4 w-full max-w-md max-h-full">
             <div className="relative bg-shark rounded-lg shadow">
               <div className="flex items-start justify-between p-4 md:p-5 border-b rounded-t">
-                <h2 className="text-white text-3xl font-black">
+                <h2 className="text-white text-xl md:text-3xl font-black">
                   Add to playlist
                 </h2>
 
