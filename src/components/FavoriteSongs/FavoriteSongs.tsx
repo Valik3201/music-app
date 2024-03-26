@@ -99,8 +99,7 @@ const FavoriteSongs = () => {
                     {item.track.album.name}
                     {item.track.album.album_type === "single" && (
                       <span>
-                        {" "}
-                        -{" "}
+                        {" - "}
                         {item.track.album.album_type.charAt(0).toUpperCase() +
                           item.track.album.album_type.slice(1)}
                       </span>
@@ -108,13 +107,13 @@ const FavoriteSongs = () => {
                   </Link>
                 </td>
                 <td className="text-silver-400 text-center py-2">
-                  {Math.floor(item.track.duration_ms / 60000)}:
-                  {(
-                    "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
-                  ).slice(-2)}
-                </td>
-                <td className="text-silver-400 text-center py-2">
-                  <AddToPlaylistModal uri={item.track.uri} />
+                  <div className="flex gap-1.5 items-center">
+                    {Math.floor(item.track.duration_ms / 60000)}:
+                    {(
+                      "0" + Math.floor((item.track.duration_ms % 60000) / 1000)
+                    ).slice(-2)}
+                    <AddToPlaylistModal uri={item.track.uri} />
+                  </div>
                 </td>
               </tr>
             ))}

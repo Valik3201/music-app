@@ -242,12 +242,12 @@ const SearchForm: React.FC = () => {
                         </div>
 
                         <div className="pr-2 flex items-center gap-1">
-                          <AddToPlaylistModal uri={result.uri} />
                           {Math.floor(result.duration_ms / 60000)}:
                           {(
                             "0" +
                             Math.floor((result.duration_ms % 60000) / 1000)
                           ).slice(-2)}
+                          <AddToPlaylistModal uri={result.uri} />
                         </div>
                       </div>
                     </div>

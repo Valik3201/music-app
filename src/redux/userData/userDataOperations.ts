@@ -8,6 +8,9 @@ export const getUserSavedAlbums = createAsyncThunk(
   async (accessToken: string) => {
     try {
       const response = await axios.get("/me/albums", {
+        params: {
+          limit: 50,
+        },
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -25,6 +28,9 @@ export const getUserTracks = createAsyncThunk(
   async (accessToken: string) => {
     try {
       const response = await axios.get("/me/tracks", {
+        params: {
+          limit: 50,
+        },
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -42,6 +48,9 @@ export const getUserPlaylists = createAsyncThunk(
   async (accessToken: string) => {
     try {
       const response = await axios.get("/me/playlists", {
+        params: {
+          limit: 50,
+        },
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

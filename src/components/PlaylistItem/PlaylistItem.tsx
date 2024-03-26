@@ -156,8 +156,7 @@ const PlaylistItem = () => {
                     {item.track.album.name}
                     {item.track.album.album_type === "single" && (
                       <span>
-                        {" "}
-                        -{" "}
+                        {" - "}
                         {item.track.album.album_type.charAt(0).toUpperCase() +
                           item.track.album.album_type.slice(1)}
                       </span>
