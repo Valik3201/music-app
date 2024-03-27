@@ -152,7 +152,7 @@ export const GridPlusIconSolid = () => (
 
 export const ListMusicOutline = () => (
   <svg
-    className="w-6 h-6"
+    className="w-6 h-6 flex-shrink-0"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -172,7 +172,7 @@ export const ListMusicOutline = () => (
 
 export const ListMusicSolid = () => (
   <svg
-    className="w-6 h-6 text-green"
+    className="w-6 h-6 flex-shrink-0 text-green"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     width="24"

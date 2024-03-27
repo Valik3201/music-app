@@ -23,10 +23,12 @@ const Artist: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 const Description: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div
-    className="text-silver-400 w-full lg:w-96"
-    dangerouslySetInnerHTML={{ __html: children as string }}
-  />
+  <div className="text-silver-400 w-full lg:w-96 overflow-hidden">
+    <div
+      className="line-clamp-4"
+      dangerouslySetInnerHTML={{ __html: children as string }}
+    />
+  </div>
 );
 
 const Table: React.FC<{ children: React.ReactNode }> = ({ children }) => (

@@ -111,7 +111,7 @@ const PlaylistItem = () => {
           <Table>
             {playlist.tracks.items.map((item) => (
               <tr key={item.track.id} className="odd:bg-shark/50 even:bg-black">
-                <td className="relative p-2">
+                <td className="relative py-4 px-2">
                   <p className="font-bold truncate ms-12">{item.track.name}</p>
 
                   <div className="lg:hidden truncate ms-12">
@@ -137,7 +137,7 @@ const PlaylistItem = () => {
                   ></div>
                 </td>
 
-                <td className="hidden lg:table-cell text-silver-400 truncate py-2">
+                <td className="hidden lg:table-cell text-silver-400 truncate py-4">
                   {item.track.artists.map((artist, index) => [
                     <a
                       key={artist.id}
@@ -151,7 +151,7 @@ const PlaylistItem = () => {
                     index !== item.track.artists.length - 1 && ", ",
                   ])}
                 </td>
-                <td className="hidden lg:table-cell text-silver-400 truncate py-2">
+                <td className="hidden lg:table-cell text-silver-400 truncate py-4">
                   <Link to={`/album/${item.track.album.id}`}>
                     {item.track.album.name}
                     {item.track.album.album_type === "single" && (
@@ -163,7 +163,7 @@ const PlaylistItem = () => {
                     )}
                   </Link>
                 </td>
-                <td className="text-silver-400 text-center py-2">
+                <td className="text-silver-400 text-center py-4">
                   <div className="flex gap-1.5 items-center">
                     {Math.floor(item.track.duration_ms / 60000)}:
                     {(
