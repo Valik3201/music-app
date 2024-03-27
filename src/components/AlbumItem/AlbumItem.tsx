@@ -132,7 +132,7 @@ const AlbumItem = () => {
             {album.tracks.items.map((item, index) => (
               <tr key={item.id} className="odd:bg-shark/50 even:bg-black">
                 <td className="py-4 ps-4">
-                  <div className="flex gap-4 items-center">
+                  <div className="flex gap-2 items-center">
                     <p>{index + 1}</p>
                     <p className="font-bold truncate">{item.name}</p>
 

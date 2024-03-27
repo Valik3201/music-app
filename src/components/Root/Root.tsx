@@ -240,7 +240,7 @@ const Root: React.FC = () => {
                             ) : (
                               <Icons.ListMusicOutline />
                             )}
-                            {playlist.name}
+                            <p className="truncate">{playlist.name}</p>
                           </>
                         )}
                       </NavLink>
