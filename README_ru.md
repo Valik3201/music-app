@@ -1,8 +1,36 @@
-# Music App with Spotify Web API
+<h1 align="center">React + TypeScript + Vite Music App with Spotify Web API</h1>
+    
+<div align="center">
+  <p>
+    Веб-приложение с использованием Spotify Web API для поиска и создания плейлистов, а также других функций. 
+    <br />
+    <a href="https://github.com/Valik3201/music-app"><strong>Документация (русский) »</strong></a>
+    ·
+    <a href="https://github.com/Valik3201/music-app/blob/main/README.md"><strong>Documentation (English) »</strong></a>
+    <br />
+    <br />
+    <a href="https://music-app-ts.netlify.app/">Посмотреть демо</a>
+    ·
+    <a href="https://github.com/Valik3201/music-app/issues">Сообщить о проблеме</a>
+    ·
+    <a href="https://github.com/Valik3201/music-app/issues">Запросить новую функцию</a>
+  </p>
+</div>
 
 ## Описание
 
-Это веб-приложение разработано в рамках обучения на платформе Codecademy. Проект позволяет пользователям искать музыкальные композиции в библиотеке Spotify, создавать персонализированные плейлисты и сохранять их в своем аккаунте Spotify.
+Это веб-приложение разработано в рамках обучения на платформе [Codecademy](https://www.codecademy.com). Создавая этот проект, я хотел бы более глубоко изучить TypeScript и укрепить свои навыки работы с Redux, React Router и Tailwind CSS, а также углубить свое понимание React. Приложение позволяет пользователям искать музыкальные композиции в библиотеке Spotify, создавать персонализированные плейлисты и сохранять их в своем аккаунте Spotify.
+
+![React Badge](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=000&style=flat)
+![TypeScript Badge](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=flat)
+![Vite Badge](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff&style=flat)
+![Axios Badge](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=fff&style=flat)
+![React Router Badge](https://img.shields.io/badge/React%20Router-CA4245?logo=reactrouter&logoColor=fff&style=flat)
+![Redux Badge](https://img.shields.io/badge/Redux-764ABC?logo=redux&logoColor=fff&style=flat)
+![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=flat)
+![Netlify Badge](https://img.shields.io/badge/Netlify-00C7B7?logo=netlify&logoColor=fff&style=flat)
+
+[![screenshot](https://github.com/Valik3201/music-app/blob/main/assets/screenshot-1.png)](https://github.com/Valik3201/music-app/blob/main/assets/screenshot-1.png)
 
 ## Функциональность
 
@@ -81,7 +109,11 @@ npm run dev
 
 Этот раздел в моем проекте заслуживает особого внимания. Реализация функциональности аутентификации была для меня сложной задачей, требующей много усилий и времени. Возможно, для кого-то это бы казалось простым, но для меня это был настоящий вызов. По-этому я бы хотел уделить этому особое внимание. Надеюсь, что моя информация и опыт в этом аспекте будут полезными для других разработчиков, сталкивающихся с подобными задачами.
 
-Для обеспечения безопасности и защиты данных пользователей я использовал метод аутентификации с использованием **Proof Key for Code Exchange (PKCE)**. Этот метод позволяет предотвратить атаки, связанные с перехватом кода авторизации и использованием его для получения токена доступа. Основная информация о данном методе представлена [здесь](https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow), но я также хочу разложить все по порядку и дать подробное описание реализации этого метода в моем приложении.
+В процессе разработки я столкнулся с отсутствием примеров использования аутентификации Spotify Web API с использованием React и TypeScript. Большинство доступных примеров были основаны на использовании фреймворка Express для реализации метода `/login` инициирования запроса авторизации. Однако, такие примеры не подходили для моего проекта, который базировался на React и TypeScript без использования Express.
+
+По-этому я решил обратиться к руководству по Authorization Code with PKCE Flow на JavaScript и адаптировать его для своего проекта. 
+
+Метод аутентификации с использованием **Proof Key for Code Exchange (PKCE)** позволяет предотвратить атаки, связанные с перехватом кода авторизации и использованием его для получения токена доступа. Основная информация о данном методе представлена [здесь](https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow), но я также хочу разложить все по порядку и дать подробное описание реализации этого метода в моем приложении.
 
 Это дополнительное объяснение позволяет дать более подробное представление о том, как метод PKCE используется в моем приложении, и каким образом он обеспечивает безопасность аутентификационного процесса.
 
@@ -105,7 +137,7 @@ export const generateCodeVerifier = () => {
 
 ### Code Challenge
 
-После того, как верификатор кода был сгенерирован, нужно преобразовать (хэшировать) его с помощью алгоритма SHA256. Это значение, которое будет отправлено в запросе на авторизацию пользователя.
+После того, как верификатор кода был сгенерирован, нужно преобразовать (хэшировать) его с помощью алгоритма **SHA256**. Это значение, которое будет отправлено в запросе на авторизацию пользователя.
 
 Для этого используется функция `generateCodeChallenge`, которая принимает код авторизации в качестве входных данных, преобразует его в бинарный формат, вычисляет хеш SHA-256 и возвращает результат в виде строки Base64, который затем используется в обмене кода авторизации на токен доступа.
 
@@ -119,7 +151,7 @@ export const generateCodeChallenge = async (codeVerifier: string) => {
 };
 ```
 
-Далее реализована функцию `base64urlencode`, которая возвращает представление base64 дайджеста, который был вычеслен с помощью функции `generateCodeChallenge`:
+Далее реализована функция `base64urlencode`, которая возвращает base64-представление вычисленного хэша с помощью функции `generateCodeChallenge`:
 
 ```typescript
 // Function to encode array buffer to base64 URL
@@ -350,3 +382,19 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 2. **useAppSelector**: Этот хук позволяет выбирать части состояния из Redux store. Он принимает тип `RootState`, который представляет корневое состояние Redux store, и возвращает выбранный кусок состояния. Он инициализируется с помощью функции `useSelector` из пакета `react-redux`.
 
 После определения кастомных хуков, их можно использовать в компонентах React для управления состоянием приложения с помощью Redux без необходимости каждый раз импортировать `useDispatch` и `useSelector` из `react-redux` и передавать типы состояния и диспатча.
+
+## Автор
+
+[![Gmail Badge](https://img.shields.io/badge/Gmail-EA4335?logo=gmail&logoColor=fff&style=flat)](mailto:valik3201@gmail.com)
+[![LinkedIn Badge](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=fff&style=flat)](https://www.linkedin.com/in/valentynchernetskyi/)
+[![Telegram Badge](https://img.shields.io/badge/Telegram-26A5E4?logo=telegram&logoColor=fff&style=flat)](https://t.me/valik3201)
+[![Instagram Badge](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=fff&style=flat)](https://www.instagram.com/valik_chern/)
+[![Twitter Badge](https://img.shields.io/badge/Twitter-1D9BF0?logo=twitter&logoColor=fff&style=flat)](https://twitter.com/valik3201)
+
+## Благодарности
+
+#### Spotify
+Хочу выразить благодарность компании Spotify за предоставление доступа к их Web API, что позволило реализовать функционал музыкального приложения в этом проекте.
+
+#### Codecademy
+Выражаю благодарность Codecademy за предоставление обучающего материала и возможность изучения технологий, которые использовались при разработке этого проекта. Благодаря курсам на Codecademy я смог углубить свои знания в React и TypeScript, что помогло в реализации данного приложения.
