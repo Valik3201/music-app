@@ -111,7 +111,7 @@ The application will be available at `http://localhost:5173`.
 
 ## Authentication via Spotify
 
-For detailed information on the authentication process in the application, please refer to the [`authentication.md`](https://github.com/Valik3201/music-app/blob/main/authentication_en.md) file.
+For detailed information on the authentication process in the application, please refer to the [`authentication.md`](https://github.com/Valik3201/music-app/blob/main/authentication.md) file.
 
 ### Redux Hooks
 
