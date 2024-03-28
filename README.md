@@ -1,4 +1,4 @@
-<h1 align="center">React + TypeScript + Vite Music App with Spotify Web API</h1>
+<h1 align="center">React + TypeScript + Vite Music App<br/>with Spotify Web API</h1>
     
 <div align="center">
   <p>
