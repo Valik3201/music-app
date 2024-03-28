@@ -4,9 +4,9 @@
   <p>
     A web application using Spotify Web API for searching and creating playlists, along with other features. 
     <br />
-    <a href="https://github.com/Valik3201/music-app"><strong>Documentation (Russian) »</strong></a>
+    <a href="https://github.com/Valik3201/music-app/blob/main/README_ru.md"><strong>Documentation (Russian) »</strong></a>
     ·
-    <a href="https://github.com/Valik3201/music-app/blob/main/README.md"><strong>Documentation (English) »</strong></a>
+    <a href="https://github.com/Valik3201/music-app"><strong>Documentation (English) »</strong></a>
     <br />
     <br />
     <a href="https://music-app-ts.netlify.app/">View Demo</a>
