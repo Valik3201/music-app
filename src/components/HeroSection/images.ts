@@ -1,17 +1,42 @@
-export const images = [
-  "/album-covers/1000x1000bb-1.webp",
-  "/album-covers/1000x1000bb-2.webp",
-  "/album-covers/1000x1000bb-3.webp",
-  "/album-covers/1000x1000bb-4.webp",
-  "/album-covers/1000x1000bb-5.webp",
-  "/album-covers/1000x1000bb-6.webp",
-  "/album-covers/1000x1000bb-7.webp",
-  "/album-covers/1000x1000bb-8.webp",
-  "/album-covers/1000x1000bb-9.webp",
-  "/album-covers/1000x1000bb-10.webp",
-  "/album-covers/1000x1000bb-11.webp",
-  "/album-covers/1000x1000bb-12.webp",
-  "/album-covers/1000x1000bb-13.webp",
-  "/album-covers/1000x1000bb-14.webp",
-  "/album-covers/1000x1000bb-15.webp",
-];
+import axios from "axios";
+import { clientId, clientSecret } from "../../constants/constants";
+
+async function getSpotifyToken(): Promise<string> {
+  const url = "https://accounts.spotify.com/api/token";
+  const credentials = btoa(`${clientId}:${clientSecret}`);
+
+  const response = await axios.post(url, "grant_type=client_credentials", {
+    headers: {
+      Authorization: `Basic ${credentials}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+
+  if (response.status !== 200) {
+    throw new Error(`Failed to fetch token: ${response.statusText}`);
+  }
+
+  return response.data.access_token;
+}
+
+export async function getSpotifyAlbumCovers(): Promise<string[]> {
+  const token = await getSpotifyToken();
+  const url = "https://api.spotify.com/v1/browse/new-releases?limit=25";
+
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status !== 200) {
+    throw new Error(`Failed to fetch data: ${response.statusText}`);
+  }
+
+  const images = response.data.albums.items.map(
+    (item: any) => item.images[0].url
+  );
+
+  return images;
+}

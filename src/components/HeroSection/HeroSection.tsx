@@ -1,7 +1,7 @@
+import { useState, useEffect } from "react";
 import { redirectToSpotifyAuthorize } from "../../utils/spotifyAuth";
-import Alpine from "alpinejs";
-import { Alpine as AlpineType } from "alpinejs";
-import { images } from "./images";
+import { getSpotifyAlbumCovers } from "./images";
+import Alpine, { Alpine as AlpineType } from "alpinejs";
 
 declare global {
   var Alpine: AlpineType;
@@ -12,6 +12,18 @@ window.Alpine = Alpine;
 Alpine.start();
 
 const HeroSection: React.FC = () => {
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    getSpotifyAlbumCovers()
+      .then((covers) => {
+        setImages(covers);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <>
       <div className="bg-green w-full h-96 absolute top-0 left-0 z-0 bg-hero"></div>
